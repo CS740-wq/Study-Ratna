@@ -34,15 +34,20 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f4f6f8;
             color: var(--dark-text);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Align to top for better view on desktop */
             min-height: 100vh;
             padding: 20px 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         /* Mobile Screen Container */
@@ -51,10 +56,11 @@
             max-width: 420px;
             background-color: var(--white);
             border-radius: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 60px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             position: relative;
             padding-bottom: 80px; /* Space for the bottom nav */
+            animation: fadeIn 0.5s ease-in-out;
         }
         
         main {
@@ -63,12 +69,15 @@
 
         /* 🔝 Header Section */
         .app-header {
-            background-color: var(--primary-purple);
+            background: linear-gradient(135deg, var(--primary-purple), #864ce8);
             color: var(--white);
             padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .app-logo {
@@ -76,19 +85,23 @@
             align-items: center;
             font-size: 20px;
             font-weight: 700;
+            animation: slideDown 0.6s ease-out;
         }
         
         .app-logo i {
             margin-right: 10px;
+            animation: spin 2s linear infinite;
         }
 
         .header-icon i {
             font-size: 24px;
             color: var(--white);
-            transition: transform 0.2s;
+            transition: transform 0.3s ease, color 0.3s ease;
+            animation: slideDown 0.6s ease-out;
         }
         .header-icon i:hover {
-            transform: scale(1.1);
+            transform: scale(1.2) rotate(15deg);
+            color: var(--banner-yellow);
         }
 
         /* 👋 Welcome Banner */
@@ -98,6 +111,9 @@
             padding: 20px;
             margin: 20px 20px 0;
             text-align: center;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUpFadeIn 0.7s ease-out 0.2s forwards;
         }
         
         .welcome-banner p {
@@ -108,12 +124,16 @@
 
         /* 💡 Motivational Quote Section */
         .quote-section {
-            background-color: var(--quote-blue);
+            background: linear-gradient(135deg, var(--quote-blue), #2e8ce6);
             color: var(--white);
             border-radius: 20px;
             padding: 20px;
             margin: 20px;
             text-align: center;
+            box-shadow: 0 5px 15px rgba(73, 167, 255, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUpFadeIn 0.7s ease-out 0.4s forwards;
         }
         
         .quote-section .quote-text {
@@ -134,14 +154,17 @@
             font-weight: 700;
             margin-bottom: 15px;
             padding: 0 20px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUpFadeIn 0.7s ease-out 0.6s forwards;
         }
         
         .modules-grid {
             display: grid;
             gap: 15px;
             padding: 0 20px 20px;
-            /* Mobile View: 4 columns */
             grid-template-columns: repeat(4, 1fr);
+            perspective: 1000px; /* This enables 3D space for child elements */
         }
 
         .module-card {
@@ -157,13 +180,25 @@
             text-decoration: none;
             color: var(--dark-text);
             position: relative;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
             aspect-ratio: 1 / 1; /* Makes cards perfectly square */
+            transform-style: preserve-3d; /* Important for 3D effect */
+            opacity: 0; /* Initially hidden for animation */
+            transform: scale(0.8);
         }
         
+        .module-card.is-visible {
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
         .module-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(161, 98, 247, 0.25);
+            box-shadow: 0 12px 30px rgba(161, 98, 247, 0.3);
+            transform: rotateY(15deg) rotateX(10deg) scale(1.05);
+        }
+        
+        .module-card:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
         }
 
         .module-card .module-logo {
@@ -171,6 +206,11 @@
             height: 40px;
             object-fit: contain;
             margin-bottom: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .module-card:hover .module-logo {
+            transform: translateZ(20px); /* Makes logo pop out in 3D */
         }
 
         .module-card .module-title {
@@ -189,6 +229,7 @@
             font-weight: 700;
             padding: 2px 6px;
             border-radius: 5px;
+            animation: pulse-badge 1.5s infinite;
         }
         
         /* 🔽 Bottom Navigation Bar */
@@ -197,12 +238,15 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: var(--light-purple);
+            background-color: var(--white);
             display: flex;
             justify-content: space-around;
             align-items: center;
             padding: 10px 0;
             border-top: 1px solid #e0c8ff;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
         }
         
         .nav-item {
@@ -213,24 +257,63 @@
             color: var(--light-text);
             font-size: 12px;
             font-weight: 600;
+            transition: color 0.3s ease;
         }
         
         .nav-item i {
             font-size: 22px;
             margin-bottom: 4px;
+            transition: transform 0.3s ease;
         }
         
         .nav-item.active {
             color: var(--primary-purple);
         }
+        
+        .nav-item.clicked i {
+            animation: nav-icon-bounce 0.5s ease;
+        }
 
-        /* 🖥️ Desktop Responsiveness (for the 8x8 grid requirement) */
+        /* ✨ Animations & Motion Effects */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideUpFadeIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse-badge {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 77, 77, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+        }
+        @keyframes nav-icon-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* 🖥️ Desktop Responsiveness */
         @media (min-width: 1024px) {
+            body {
+                align-items: center;
+            }
             .mobile-screen {
-                max-width: 1200px; /* Wider container for desktop */
+                max-width: 1200px;
             }
             .modules-grid {
-                /* Desktop View: 8 columns */
                 grid-template-columns: repeat(8, 1fr);
             }
         }
@@ -245,7 +328,7 @@
                 <i class="fa-solid fa-book-open"></i>
                 <span>STUDY RATNA</span>
             </div>
-            <a href="#" class="header-icon">
+            <a href="https://telegram.me/your-channel" target="_blank" class="header-icon">
                 <i class="fa-brands fa-telegram"></i>
             </a>
         </header>
@@ -258,211 +341,152 @@
             
             <!-- 💡 Motivational Quote Section -->
             <div class="quote-section">
-                <p class="quote-text">"Learning never exhausts the mind."</p>
-                <p class="quote-author">— Leonardo da Vinci</p>
+                <p id="quoteText" class="quote-text">"Loading quote..."</p>
+                <p id="quoteAuthor" class="quote-author"></p>
             </div>
             
             <!-- 📚 Modules Section Title -->
             <h2 class="modules-title">📚 Modules</h2>
             
-            <!-- 
-              Modules Section Grid
-              NOTE: Each card is an <a> tag. This makes the entire card clickable.
-              You should change the href="#" to the correct link for each module's new page.
-            -->
-            <div class="modules-grid">
+            <!-- Modules Section Grid with href links -->
+            <div class="modules-grid" id="modulesGrid">
               
-                <!-- Module 1 -->
-                <a href="new-page-link-1.html" class="module-card">
+                <a href="physics-wallah.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWR2V.jpg" alt="Physics Wallah Logo" class="module-logo">
                     <p class="module-title">Physics Wallah</p>
                 </a>
-              
-                <!-- Module 2 -->
-                <a href="new-page-link-2.html" class="module-card">
+                <a href="vedantu.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWGEv.jpg" alt="Vedantu Logo" class="module-logo">
                     <p class="module-title">Vedantu</p>
                 </a>
-
-                <!-- Module 3 -->
-                <a href="new-page-link-3.html" class="module-card">
+                <a href="unacademy.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWM4R.jpg" alt="Unacademy Logo" class="module-logo">
                     <p class="module-title">Unacademy</p>
                 </a>
-
-                <!-- Module 4 -->
-                <a href="new-page-link-4.html" class="module-card">
+                <a href="magnet-brains.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWW2p.jpg" alt="Magnet Brains Logo" class="module-logo">
                     <p class="module-title">Magnet Brains</p>
                 </a>
-
-                <!-- Module 5 -->
-                <a href="new-page-link-5.html" class="module-card">
+                <a href="learnohub.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWXYN.jpg" alt="LearnoHub Logo" class="module-logo">
                     <p class="module-title">LearnoHub</p>
                 </a>
-
-                <!-- Module 6 (Placeholder) -->
-                <a href="new-page-link-6.html" class="module-card">
+                <a href="bodhaguru.html" class="module-card">
                     <div class="new-badge">NEW</div>
-                    <img src="https://via.placeholder.com/50/A162F7/FFFFFF?text=B" alt="Bodhaguru Logo" class="module-logo">
+                    <img src="https://iili.io/jI6q5fS.png" alt="Bodhaguru Logo" class="module-logo">
                     <p class="module-title">Bodhaguru</p>
                 </a>
-
-                <!-- Module 7 (Placeholder) -->
-                <a href="new-page-link-7.html" class="module-card">
+                <a href="edumantra.html" class="module-card">
                     <div class="new-badge">NEW</div>
-                    <img src="https://via.placeholder.com/50/A162F7/FFFFFF?text=E" alt="Edumantra Logo" class="module-logo">
+                    <img src="https://iili.io/jI6q3u4.png" alt="Edumantra Logo" class="module-logo">
                     <p class="module-title">Edumantra</p>
                 </a>
-
-                <!-- Module 8 -->
-                <a href="new-page-link-8.html" class="module-card">
+                <a href="physics-galaxy.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRVtdN.jpg" alt="Physics Galaxy Logo" class="module-logo">
                     <p class="module-title">Physics Galaxy</p>
                 </a>
-
-                <!-- Module 9 -->
-                <a href="new-page-link-9.html" class="module-card">
+                <a href="aakash-institute.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRVD7I.jpg" alt="Aakash Institute Logo" class="module-logo">
                     <p class="module-title">Aakash Institute</p>
                 </a>
-
-                <!-- Module 10 -->
-                <a href="new-page-link-10.html" class="module-card">
+                <a href="byjus.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRVbet.jpg" alt="Byju’s Logo" class="module-logo">
                     <p class="module-title">Byju’s</p>
                 </a>
-                
-                <!-- Module 11 (Placeholder) -->
-                <a href="new-page-link-11.html" class="module-card">
+                <a href="vidyalaya.html" class="module-card">
                     <div class="new-badge">NEW</div>
-                    <img src="https://via.placeholder.com/50/A162F7/FFFFFF?text=V" alt="Vidyalaya Logo" class="module-logo">
+                    <img src="https://iili.io/jI6qJAb.png" alt="Vidyalaya Logo" class="module-logo">
                     <p class="module-title">Vidyalaya</p>
                 </a>
-                
-                <!-- Module 12 -->
-                <a href="new-page-link-12.html" class="module-card">
+                <a href="adda247.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRVmmX.jpg" alt="Adda247 Logo" class="module-logo">
                     <p class="module-title">Adda247</p>
                 </a>
-                
-                <!-- Module 13 -->
-                <a href="new-page-link-13.html" class="module-card">
+                <a href="next-topper.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRVyIn.jpg" alt="Next Topper Logo" class="module-logo">
                     <p class="module-title">Next Topper</p>
                 </a>
-
-                <!-- Module 14 -->
-                <a href="new-page-link-14.html" class="module-card">
+                <a href="career-launcher.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWHLG.jpg" alt="Career Launcher Logo" class="module-logo">
                     <p class="module-title">Career Launcher</p>
                 </a>
-                
-                <!-- Module 15 -->
-                <a href="new-page-link-15.html" class="module-card">
+                <a href="toppr.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWdBf.jpg" alt="Toppr Logo" class="module-logo">
                     <p class="module-title">Toppr</p>
                 </a>
-                
-                <!-- Module 16 (Placeholder) -->
-                <a href="new-page-link-16.html" class="module-card">
+                <a href="extramarks.html" class="module-card">
                     <div class="new-badge">NEW</div>
-                    <img src="https://via.placeholder.com/50/A162F7/FFFFFF?text=E" alt="Extramarks Logo" class="module-logo">
+                    <img src="https://iili.io/jI6qgCJ.png" alt="Extramarks Logo" class="module-logo">
                     <p class="module-title">Extramarks</p>
                 </a>
-                
-                <!-- Module 17 (Placeholder) -->
-                <a href="new-page-link-17.html" class="module-card">
+                <a href="khan-sir-kgs.html" class="module-card">
                     <div class="new-badge">NEW</div>
-                    <img src="https://via.placeholder.com/50/A162F7/FFFFFF?text=KGS" alt="Khan Sir Official Logo" class="module-logo">
+                    <img src="https://iili.io/jI6q6iG.png" alt="Khan Sir Official Logo" class="module-logo">
                     <p class="module-title">Khan Sir (KGS)</p>
                 </a>
-                
-                <!-- Module 18 -->
-                <a href="new-page-link-18.html" class="module-card">
+                <a href="pw-bihar-exams.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRW214.jpg" alt="PW Bihar Govt Exams Logo" class="module-logo">
                     <p class="module-title">PW Bihar Exams</p>
                 </a>
-                
-                <!-- Module 19 -->
-                <a href="new-page-link-19.html" class="module-card">
+                <a href="testbook-bpsc.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWK22.jpg" alt="Testbook BPSC Logo" class="module-logo">
                     <p class="module-title">Testbook BPSC</p>
                 </a>
-                
-                <!-- Module 20 -->
-                <a href="new-page-link-20.html" class="module-card">
+                <a href="adda247-bihar.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWf7S.jpg" alt="Adda247 Bihar Police Logo" class="module-logo">
                     <p class="module-title">Adda247 Bihar</p>
                 </a>
-                
-                <!-- Module 21 -->
-                <a href="new-page-link-21.html" class="module-card">
+                <a href="unacademy-bihar.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWqk7.jpg" alt="Unacademy Bihar Exams Logo" class="module-logo">
                     <p class="module-title">Unacademy Bihar</p>
                 </a>
-                
-                <!-- Module 22 -->
-                <a href="new-page-link-22.html" class="module-card">
+                <a href="plutusias.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWBp9.jpg" alt="PlutusIAS Logo" class="module-logo">
                     <p class="module-title">PlutusIAS</p>
                 </a>
-                
-                <!-- Module 23 -->
-                <a href="new-page-link-23.html" class="module-card">
+                <a href="bssei.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWxLb.jpg" alt="BSSEI Logo" class="module-logo">
                     <p class="module-title">BSSEI</p>
                 </a>
-                
-                <!-- Module 24 -->
-                <a href="new-page-link-24.html" class="module-card">
+                <a href="sarkaripariksha.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWIBj.jpg" alt="SarkariPariksha Logo" class="module-logo">
                     <p class="module-title">SarkariPariksha</p>
                 </a>
-                
-                <!-- Module 25 -->
-                <a href="new-page-link-25.html" class="module-card">
+                <a href="class24.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWTEx.jpg" alt="Class24 Logo" class="module-logo">
                     <p class="module-title">Class24</p>
                 </a>
-                
-                <!-- Module 26 -->
-                <a href="new-page-link-26.html" class="module-card">
+                <a href="disha-classes.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRWurQ.jpg" alt="Disha Online Classes Logo" class="module-logo">
                     <p class="module-title">Disha Classes</p>
                 </a>
-                
-                <!-- Module 27 -->
-                <a href="new-page-link-27.html" class="module-card">
+                <a href="vidyakul.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FMRW5YB.jpg" alt="Vidyakul Logo" class="module-logo">
                     <p class="module-title">Vidyakul</p>
                 </a>
-                
-                <!-- Module 28 -->
-                <a href="new-page-link-28.html" class="module-card">
+                <a href="dhruv-rathee.html" class="module-card">
                     <div class="new-badge">NEW</div>
                     <img src="https://iili.io/FM53rLQ.jpg" alt="Dhruv Rathee Logo" class="module-logo">
                     <p class="module-title">Dhruv Rathee</p>
@@ -496,47 +520,67 @@
         </nav>
     </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 1. Dynamic Motivational Quote ---
+    const quotes = [
+        { text: "Learning never exhausts the mind.", author: "— Leonardo da Vinci" },
+        { text: "The only way to do great work is to love what you do.", author: "— Steve Jobs" },
+        { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "— Winston Churchill" },
+        { text: "Believe you can and you're halfway there.", author: "— Theodore Roosevelt" },
+        { text: "The future belongs to those who believe in the beauty of their dreams.", author: "— Eleanor Roosevelt" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('quoteText').textContent = `"${randomQuote.text}"`;
+    document.getElementById('quoteAuthor').textContent = randomQuote.author;
+    
+    // --- 2. Staggered Animation for Module Cards on Scroll ---
+    const moduleCards = document.querySelectorAll('.module-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationDelay = `${index * 50}ms`;
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    moduleCards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // --- 3. Interactive Bottom Navigation Animation ---
+    const navItems = document.querySelectorAll('.nav-item');
+
+    navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            navItems.forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+            this.classList.add('clicked');
+            setTimeout(() => {
+                this.classList.remove('clicked');
+            }, 500);
+        });
+    });
+
+    // --- 4. Handle Module Card Clicks (For Demonstration) ---
+    // This prevents "File not found" errors and shows which link was clicked.
+    // **जब आप असली पेज बना लें, तो आप इस हिस्से को हटा सकते हैं।**
+    moduleCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            e.preventDefault(); // This stops the browser from trying to follow the link
+            const destination = this.getAttribute('href');
+            alert(`Link clicked!\nThis would navigate to: ${destination}`);
+        });
+    });
+
+});
+</script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
