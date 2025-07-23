@@ -12,10 +12,14 @@
     
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts for Popup -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* CSS Variables for Easy Theme Management */
         :root {
+            /* Original Theme Variables */
             --primary-purple: #A162F7;
             --light-purple: #F3EFFF;
             --dark-text: #343434;
@@ -25,6 +29,15 @@
             --white: #FFFFFF;
             --shadow-color: rgba(161, 98, 247, 0.15);
             --red-badge: #FF4D4D;
+
+            /* Popup Theme Variables */
+            --charcoal-bg: #121212; 
+            --card-bg: #1E1E1E; 
+            --gold-primary: #D4AF37;
+            --gold-secondary: #FFD700;
+            --text-primary: #EAEAEA;
+            --text-secondary: #A0A0A0;
+            --glow-color: rgba(255, 215, 0, 0.55);
         }
 
         /* Basic Reset and Body Styling */
@@ -48,6 +61,10 @@
             min-height: 100vh;
             padding: 20px 0;
             overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        
+        body.popup-open {
+            overflow: hidden; /* Prevent scrolling of main content when popup is open */
         }
 
         /* Mobile Screen Container */
@@ -164,7 +181,7 @@
             gap: 15px;
             padding: 0 20px 20px;
             grid-template-columns: repeat(4, 1fr);
-            perspective: 1000px; /* This enables 3D space for child elements */
+            perspective: 1000px;
         }
 
         .module-card {
@@ -181,9 +198,9 @@
             color: var(--dark-text);
             position: relative;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-            aspect-ratio: 1 / 1; /* Makes cards perfectly square */
-            transform-style: preserve-3d; /* Important for 3D effect */
-            opacity: 0; /* Initially hidden for animation */
+            aspect-ratio: 1 / 1;
+            transform-style: preserve-3d;
+            opacity: 0;
             transform: scale(0.8);
         }
         
@@ -210,7 +227,7 @@
         }
         
         .module-card:hover .module-logo {
-            transform: translateZ(20px); /* Makes logo pop out in 3D */
+            transform: translateZ(20px);
         }
 
         .module-card .module-title {
@@ -305,7 +322,152 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* 🖥️ Desktop Responsiveness */
+
+        /* ================================== */
+        /* ========= POPUP STYLES =========== */
+        /* ================================== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .popup-content {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 15px;
+            animation: slideUpFadeIn 0.4s ease-out;
+        }
+        /* Scrollbar styling for popup content */
+        .popup-content::-webkit-scrollbar { width: 8px; }
+        .popup-content::-webkit-scrollbar-track { background: #2c2c2c; }
+        .popup-content::-webkit-scrollbar-thumb { background-color: var(--gold-primary); border-radius: 10px; border: 2px solid #2c2c2c; }
+
+
+        .popup-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 24px;
+            line-height: 32px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 1001;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .popup-close-btn:hover {
+            background: var(--gold-primary);
+            color: var(--charcoal-bg);
+            border-color: var(--gold-primary);
+            transform: rotate(90deg);
+        }
+
+        .premium-page {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--charcoal-bg);
+            color: var(--text-primary);
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="%23222222" fill-opacity="0.4"><circle fill="%23222222" cx="50" cy="50" r="4"/><g><circle cx="10" cy="10" r="4"/><circle cx="90" cy="90" r="4"/></g><g><circle cx="10" cy="90" r="4"/><circle cx="90" cy="10" r="4"/></g><g><circle cx="10" cy="50" r="2"/><circle cx="90" cy="50" r="2"/></g><g><circle cx="50" cy="10" r="2"/><circle cx="50" cy="90" r="2"/></g></g><path d="M10 10 L50 50 L10 90 M90 10 L50 50 L90 90 M10 50 L90 50 M50 10 L50 90" stroke-width="0.5" stroke="%23222222" fill="none" stroke-opacity="0.4"/></svg>');
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 1.5rem;
+            width: 100%;
+            margin: 0;
+            gap: 2.5rem;
+        }
+
+        .main-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            color: var(--gold-primary);
+            text-shadow: 0 0 8px var(--glow-color), 0 0 20px var(--glow-color), 0 0 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .animation-container { perspective: 1000px; }
+        .glowing-orb {
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, var(--gold-secondary) 0%, var(--gold-primary) 30%, transparent 60%);
+            border-radius: 50%; position: relative;
+            animation: rotate 25s infinite linear, pulse 4s infinite ease-in-out;
+            box-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--glow-color), 0 0 80px var(--gold-primary);
+        }
+        .glowing-orb::before {
+            content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            animation: rotate-reverse 15s infinite linear;
+        }
+
+        .features-section { width: 100%; }
+        .features-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        .feature-card {
+            background-color: var(--card-bg); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center;
+            gap: 1rem; border: 1px solid #2a2a2a; transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); opacity: 0; transform: translateY(20px);
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        .feature-card:nth-child(1) { animation-delay: 0.1s; } .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; } .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; } .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); border-color: var(--gold-primary); }
+        .feature-card i { color: var(--gold-primary); font-size: 1.5rem; }
+        .feature-card span { font-size: 1rem; line-height: 1.5; }
+
+        .cta-section {
+            width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .urgency-timer-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .urgency-headline { font-size: 1.2rem; font-weight: 600; color: var(--gold-secondary); letter-spacing: 0.5px; text-shadow: 0 0 5px var(--glow-color); }
+        #countdown-timer { display: flex; align-items: center; gap: 0.75rem; font-family: 'Inter', sans-serif; }
+        .time-block { background: var(--charcoal-bg); padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #333; display: flex; flex-direction: column; align-items: center; min-width: 65px; }
+        .time-value { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); }
+        .time-label { font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+        .time-separator { font-size: 1.75rem; color: var(--gold-primary); transform: translateY(-8px); animation: blink 2s infinite; }
+        .expired-text { font-size: 1.5rem; font-weight: bold; color: #ff4d4d; padding: 1rem; }
+        
+        .cta-button {
+            display: inline-block; padding: 1rem 2.5rem; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600;
+            color: var(--charcoal-bg); background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
+            border: none; border-radius: 50px; text-decoration: none; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 15px var(--glow-color), 0 0 25px var(--glow-color), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+        .cta-button:hover, .cta-button:focus { transform: scale(1.05) translateY(-5px); box-shadow: 0 0 25px var(--glow-color), 0 0 45px var(--glow-color), inset 0 1px 3px rgba(255, 255, 255, 0.6); }
+        .trust-text { color: var(--text-secondary); font-size: 0.9rem; }
+
+        @keyframes rotate { from { transform: rotate3d(0, 1, 0, 0deg); } to { transform: rotate3d(0, 1, 0, 360deg); } }
+        @keyframes rotate-reverse { from { transform: rotate3d(1, 1, 0, 0deg); } to { transform: rotate3d(1, 1, 0, 360deg); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.85; } }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 50% { opacity: 0.5; } }
+        
+        @media (min-width: 480px) {
+            .features-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        }
+
+        /* 🖥️ Desktop Responsiveness (Original) */
         @media (min-width: 1024px) {
             body {
                 align-items: center;
@@ -520,10 +682,56 @@
         </nav>
     </div>
 
+    <!-- ================================== -->
+    <!-- ========= POPUP HTML ============= -->
+    <!-- ================================== -->
+    <div id="premiumPopup" class="popup-overlay">
+        <div class="popup-content">
+            <button id="popupCloseBtn" class="popup-close-btn">×</button>
+            <main class="premium-page">
+                <header class="hero-section">
+                    <h1 class="main-headline">
+                        🎓 Unlock Your Full Learning Journey!
+                    </h1>
+                </header>
+
+                <div class="animation-container">
+                    <div class="glowing-orb"></div>
+                </div>
+
+                <section class="features-section">
+                    <div class="features-grid">
+                        <div class="feature-card"><i class="fas fa-check-circle"></i><span><strong>All Batch Access</strong> - Unrestricted entry to every course.</span></div>
+                        <div class="feature-card"><i class="fas fa-check-circle"></i><span><strong>Detailed Video Lectures</strong> - Crystal-clear, in-depth content.</span></div>
+                        <div class="feature-card"><i class="fas fa-check-circle"></i><span><strong>Exclusive Mentor Support</strong> - Direct access to expert guidance.</span></div>
+                        <div class="feature-card"><i class="fas fa-check-circle"></i><span><strong>Premium Study Notes</strong> - Curated and comprehensive materials.</span></div>
+                        <div class="feature-card"><i class="fas fa-check-circle"></i><span><strong>24/7 Doubt Resolution</strong> - Never get stuck on a problem again.</span></div>
+                        <div class="feature-card"><i class="fas fa-check-circle"></i><span><strong>Career Pathing Tools</strong> - AI-powered career guidance.</span></div>
+                    </div>
+                </section>
+
+                <footer class="cta-section">
+                    <div class="urgency-timer-container">
+                        <h3 class="urgency-headline">Limited Time Offer Ends In:</h3>
+                        <div id="countdown-timer">
+                            <!-- Timer will be injected here by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="cta-button">
+                        🔓 Upgrade to Premium – ₹1499
+                    </a>
+                    <p class="trust-text">Secure Transaction • 7-Day Money-Back Guarantee</p>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. Dynamic Motivational Quote ---
+    // --- Original Script Logic ---
     const quotes = [
         { text: "Learning never exhausts the mind.", author: "— Leonardo da Vinci" },
         { text: "The only way to do great work is to love what you do.", author: "— Steve Jobs" },
@@ -531,14 +739,11 @@ document.addEventListener('DOMContentLoaded', () => {
         { text: "Believe you can and you're halfway there.", author: "— Theodore Roosevelt" },
         { text: "The future belongs to those who believe in the beauty of their dreams.", author: "— Eleanor Roosevelt" }
     ];
-
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
     document.getElementById('quoteText').textContent = `"${randomQuote.text}"`;
     document.getElementById('quoteAuthor').textContent = randomQuote.author;
     
-    // --- 2. Staggered Animation for Module Cards on Scroll ---
     const moduleCards = document.querySelectorAll('.module-card');
-    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
@@ -548,36 +753,96 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { threshold: 0.1 });
+    moduleCards.forEach(card => observer.observe(card));
 
-    moduleCards.forEach(card => {
-        observer.observe(card);
-    });
-
-    // --- 3. Interactive Bottom Navigation Animation ---
     const navItems = document.querySelectorAll('.nav-item');
-
     navItems.forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault(); 
             navItems.forEach(nav => nav.classList.remove('active'));
             this.classList.add('active');
             this.classList.add('clicked');
-            setTimeout(() => {
-                this.classList.remove('clicked');
-            }, 500);
+            setTimeout(() => { this.classList.remove('clicked'); }, 500);
         });
     });
 
-    // --- 4. Handle Module Card Clicks (For Demonstration) ---
-    // This prevents "File not found" errors and shows which link was clicked.
-    // **जब आप असली पेज बना लें, तो आप इस हिस्से को हटा सकते हैं।**
     moduleCards.forEach(card => {
         card.addEventListener('click', function(e) {
-            e.preventDefault(); // This stops the browser from trying to follow the link
+            e.preventDefault();
             const destination = this.getAttribute('href');
             alert(`Link clicked!\nThis would navigate to: ${destination}`);
         });
     });
+
+    // --- NEW POPUP SCRIPT LOGIC ---
+    
+    // 1. Popup Elements
+    const popupOverlay = document.getElementById('premiumPopup');
+    const popupCloseBtn = document.getElementById('popupCloseBtn');
+    const popupContent = document.querySelector('.popup-content');
+    
+    // 2. Functions to Show/Hide Popup
+    const showPopup = () => {
+        if (popupOverlay) {
+            popupOverlay.style.display = 'flex';
+            document.body.classList.add('popup-open'); // Optional: prevent body scroll
+        }
+    };
+    
+    const hidePopup = () => {
+        if (popupOverlay) {
+            popupOverlay.style.display = 'none';
+            document.body.classList.remove('popup-open'); // Optional: re-enable body scroll
+        }
+    };
+    
+    // 3. Event Listeners to Close Popup
+    if (popupCloseBtn) {
+        popupCloseBtn.addEventListener('click', hidePopup);
+    }
+    
+    if (popupOverlay) {
+        // Close popup when clicking on the dark overlay (outside the content)
+        popupOverlay.addEventListener('click', (event) => {
+            if (event.target === popupOverlay) {
+                hidePopup();
+            }
+        });
+    }
+
+    // 4. Set Interval to Show Popup every 10 seconds (10000 milliseconds)
+    setInterval(showPopup, 10000);
+
+    // --- Premium Popup Countdown Timer Logic ---
+    let countDownDate = new Date().getTime() + (24 * 60 * 60 * 1000);
+    let timerInterval = setInterval(function() {
+        let now = new Date().getTime();
+        let distance = countDownDate - now;
+
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        const timerElement = document.getElementById("countdown-timer");
+        if (timerElement) {
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                timerElement.innerHTML = "<div class='expired-text'>OFFER EXPIRED</div>";
+            } else {
+                 timerElement.innerHTML = `
+                    <div class="time-block"><span class="time-value">${hours}</span><span class="time-label">Hours</span></div>
+                    <div class="time-separator">:</div>
+                    <div class="time-block"><span class="time-value">${minutes}</span><span class="time-label">Mins</span></div>
+                    <div class="time-separator">:</div>
+                    <div class="time-block"><span class="time-value">${seconds}</span><span class="time-label">Secs</span></div>
+                `;
+            }
+        }
+    }, 1000);
 
 });
 </script>
