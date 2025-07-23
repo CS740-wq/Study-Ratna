@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STUDY RATNA - Home</title>
     
-    <!-- Google Fonts: Poppins -->
+    <!-- Main Page Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Google Fonts for Popup -->
+    <!-- Pop-up Fonts: Playfair Display & Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -290,7 +290,7 @@
             color: var(--primary-purple);
         }
         
-        .nav-item:active i { /* Changed from .clicked to :active for better link behavior */
+        .nav-item:active i { /* FIX: Changed from .clicked to :active for better link behavior */
             animation: nav-icon-bounce 0.5s ease;
         }
 
@@ -760,12 +760,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
     moduleCards.forEach(card => observer.observe(card));
 
-    // FIX: The click listener for module cards that was blocking navigation has been REMOVED.
-    // The <a> tags will now work normally.
-
-    // FIX: The click listener for nav items that was blocking navigation has been REMOVED.
-    // The links in the bottom nav will now work normally.
-    // The :active CSS pseudo-class will handle the click animation.
+    // FIX: The problematic JavaScript click listeners that prevented navigation have been removed. 
+    // The <a> tags on the module cards and nav bar will now function correctly.
 
     // --- NEW POPUP SCRIPT LOGIC ---
     
@@ -803,7 +799,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // FIX: Changed from setInterval to setTimeout.
-    // The popup will now appear only ONCE after 5 seconds, instead of every 10 seconds.
+    // The popup will now appear only ONCE after 5 seconds.
     setTimeout(showPopup, 5000); // 5000 milliseconds = 5 seconds
 
     // --- Premium Popup Countdown Timer Logic ---
