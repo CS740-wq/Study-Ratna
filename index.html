@@ -255,6 +255,7 @@
             bottom: 0;
             left: 0;
             right: 0;
+            width: 100%;
             background-color: var(--white);
             display: flex;
             justify-content: space-around;
@@ -275,6 +276,8 @@
             font-size: 12px;
             font-weight: 600;
             transition: color 0.3s ease;
+            flex: 1; /* Ensure equal spacing */
+            text-align: center;
         }
         
         .nav-item i {
@@ -287,7 +290,7 @@
             color: var(--primary-purple);
         }
         
-        .nav-item.clicked i {
+        .nav-item:active i { /* Changed from .clicked to :active for better link behavior */
             animation: nav-icon-bounce 0.5s ease;
         }
 
@@ -394,6 +397,7 @@
             width: 100%;
             margin: 0;
             gap: 2.5rem;
+            border-radius: 15px; /* Added for consistency */
         }
 
         .main-headline {
@@ -657,22 +661,20 @@
             </div>
         </main>
         
-        <!-- 🔽 Bottom Navigation Bar -->
-        <a href="popup1.html" class="nav-item active">
-  <i class="fa-solid fa-house"></i>
-  <span>Home</span>
-</a>
-
-<a href="popup2.html" class="nav-item">
-  <i class="fa-solid fa-layer-group"></i>
-  <span>Batches</span>
-</a>
-
-<a href="popup3.html" class="nav-item">
-  <i class="fa-solid fa-pencil"></i>
-  <span>Practice</span>
-</a>
-
+        <!-- FIX: Bottom navigation bar correctly structured inside a <nav> element -->
+        <nav class="bottom-nav">
+            <a href="popup1.html" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="popup2.html" class="nav-item">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Batches</span>
+            </a>
+            <a href="popup3.html" class="nav-item">
+                <i class="fa-solid fa-pencil"></i>
+                <span>Practice</span>
+            </a>
             <a href="poppup2.html" class="nav-item">
                 <i class="fa-solid fa-book-bookmark"></i>
                 <span>Study Stuff</span>
@@ -745,6 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('quoteText').textContent = `"${randomQuote.text}"`;
     document.getElementById('quoteAuthor').textContent = randomQuote.author;
     
+    // Animate module cards on scroll
     const moduleCards = document.querySelectorAll('.module-card');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
@@ -757,44 +760,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
     moduleCards.forEach(card => observer.observe(card));
 
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault(); 
-            navItems.forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
-            this.classList.add('clicked');
-            setTimeout(() => { this.classList.remove('clicked'); }, 500);
-        });
-    });
+    // FIX: The click listener for module cards that was blocking navigation has been REMOVED.
+    // The <a> tags will now work normally.
 
-    moduleCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-            e.preventDefault();
-            const destination = this.getAttribute('href');
-            alert(`Link clicked!\nThis would navigate to: ${destination}`);
-        });
-    });
+    // FIX: The click listener for nav items that was blocking navigation has been REMOVED.
+    // The links in the bottom nav will now work normally.
+    // The :active CSS pseudo-class will handle the click animation.
 
     // --- NEW POPUP SCRIPT LOGIC ---
     
     // 1. Popup Elements
     const popupOverlay = document.getElementById('premiumPopup');
     const popupCloseBtn = document.getElementById('popupCloseBtn');
-    const popupContent = document.querySelector('.popup-content');
     
     // 2. Functions to Show/Hide Popup
     const showPopup = () => {
         if (popupOverlay) {
             popupOverlay.style.display = 'flex';
-            document.body.classList.add('popup-open'); // Optional: prevent body scroll
+            document.body.classList.add('popup-open');
         }
     };
     
     const hidePopup = () => {
         if (popupOverlay) {
             popupOverlay.style.display = 'none';
-            document.body.classList.remove('popup-open'); // Optional: re-enable body scroll
+            document.body.classList.remove('popup-open');
         }
     };
     
@@ -804,7 +794,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (popupOverlay) {
-        // Close popup when clicking on the dark overlay (outside the content)
+        // Close popup when clicking on the dark overlay
         popupOverlay.addEventListener('click', (event) => {
             if (event.target === popupOverlay) {
                 hidePopup();
@@ -812,11 +802,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Set Interval to Show Popup every 10 seconds (10000 milliseconds)
-    setInterval(showPopup, 10000);
+    // FIX: Changed from setInterval to setTimeout.
+    // The popup will now appear only ONCE after 5 seconds, instead of every 10 seconds.
+    setTimeout(showPopup, 5000); // 5000 milliseconds = 5 seconds
 
     // --- Premium Popup Countdown Timer Logic ---
-    let countDownDate = new Date().getTime() + (24 * 60 * 60 * 1000);
+    let countDownDate = new Date().getTime() + (24 * 60 * 60 * 1000); // 24 hours from now
     let timerInterval = setInterval(function() {
         let now = new Date().getTime();
         let distance = countDownDate - now;
