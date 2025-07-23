@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --color-pink: #E84393;
+            --color-purple-light: #8A4FFF;
+            --color-purple-dark: #3e1b72;
+            --color-magenta-dark: #c21a68;
+            --color-text-light: #f0eafc;
+            --color-text-dark: #2c003e;
+            --color-white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 90vw;
+            max-width: 1100px;
+            height: 85vh;
+            max-height: 700px;
+            background: var(--color-white);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .panel {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Animated Background Blobs */
+        .panel::before, .panel::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .welcome-panel::before {
+            background: rgba(232, 67, 147, 0.3);
+            width: 300px;
+            height: 300px;
+            top: -50px;
+            left: -100px;
+        }
+
+        .welcome-panel::after {
+            background: rgba(232, 67, 147, 0.2);
+            width: 400px;
+            height: 400px;
+            bottom: -80px;
+            right: -120px;
+            animation-delay: -5s;
+        }
+
+        .login-panel::before {
+            background: rgba(62, 27, 114, 0.4);
+            width: 350px;
+            height: 350px;
+            top: -100px;
+            right: -150px;
+        }
+
+        .login-panel::after {
+            background: rgba(138, 79, 255, 0.3);
+            width: 250px;
+            height: 250px;
+            bottom: -50px;
+            left: -80px;
+            animation-delay: -7s;
+        }
+
+
+        /* Welcome Panel (Left) */
+        .welcome-panel {
+            background-color: #fce9f2;
+            animation: slideInLeft 1s ease-out forwards;
+            text-align: left;
+            align-items: flex-start;
+        }
+
+        .welcome-panel h1 {
+            font-size: 2.2rem;
+            color: var(--color-text-dark);
+            margin-bottom: 15px;
+        }
+
+        .welcome-panel p {
+            font-size: 0.9rem;
+            color: #6d4b7c;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .illustration {
+            margin-top: 40px;
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .rocket-bg {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 140px;
+            background: var(--color-magenta-dark);
+            border-radius: 140px 140px 0 0;
+        }
+
+        .rocket {
+            position: absolute;
+            width: 80px;
+            height: 150px;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: rocket-bob 3s infinite ease-in-out;
+            z-index: 5;
+        }
+        
+        .rocket-body {
+            width: 80px; height: 120px; background: var(--color-white); border-radius: 50% 50% 20% 20%; position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .rocket-body::before { /* Nose cone */
+            content:''; position: absolute; top: -25px; left: 15px; width: 50px; height: 50px; background: var(--color-pink); border-radius: 50% 50% 0 0;
+        }
+        .window {
+            position: absolute; top: 35px; left: 20px; width: 40px; height: 40px; background: var(--color-purple-dark); border-radius: 50%; border: 5px solid #e0e0e0;
+        }
+        .fin {
+            position: absolute; bottom: 5px; width: 30px; height: 50px; background: var(--color-pink);
+        }
+        .fin-left { left: -20px; border-radius: 50% 0 0 50%; }
+        .fin-right { right: -20px; border-radius: 0 50% 50% 0; }
+        .flame { position: absolute; bottom: -30px; left: 20px; width: 40px; height: 40px; background: orangered; border-radius: 0 0 45% 45%; }
+
+
+        .cloud {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 150px;
+            animation: cloud-pulse 4s infinite ease-in-out;
+        }
+
+        .cloud-part {
+            position: absolute;
+            background: var(--color-white);
+            border-radius: 50%;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .cloud-part:nth-child(1) { width: 150px; height: 150px; bottom: 0; left: 75px; }
+        .cloud-part:nth-child(2) { width: 100px; height: 100px; bottom: 0; left: 0px; }
+        .cloud-part:nth-child(3) { width: 120px; height: 120px; bottom: 0; right: 0px; }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: float-up 10s infinite linear;
+        }
+        .star1 { width: 20px; height: 20px; bottom: 100px; left: 40px; animation-duration: 8s;}
+        .star2 { width: 15px; height: 15px; bottom: 150px; left: 240px; animation-duration: 12s;}
+        .star3 { width: 25px; height: 25px; bottom: 50px; left: 200px; animation-duration: 6s;}
+
+
+        /* Login Panel (Right) */
+        .login-panel {
+            background: var(--color-purple-dark);
+            color: var(--color-text-light);
+            animation: slideInRight 1s ease-out forwards;
+        }
+        
+        .login-form {
+            width: 100%;
+            max-width: 320px;
+            animation: fadeIn 1.5s ease-in-out 0.5s forwards;
+            opacity: 0;
+        }
+
+        .login-form h2 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--color-text-dark);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            background: white;
+            box-shadow: 0 0 0 3px var(--color-purple-light);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        .options a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .options a:hover {
+            color: var(--color-pink);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: var(--color-pink);
+            color: var(--color-white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .login-btn:hover {
+            background: var(--color-magenta-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(232, 67, 147, 0.3);
+        }
+        
+        .signup-link {
+            text-align: center;
+        }
+
+        .signup-link a {
+            color: var(--color-purple-light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .signup-link a:hover {
+            color: var(--color-pink);
+        }
+        
+        /* Animations */
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes rocket-bob {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -20px); }
+        }
+
+        @keyframes cloud-pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.03); }
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            50% { transform: translate(20px, -30px) rotate(180deg); border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+            100% { transform: translate(0, 0) rotate(360deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        }
+
+        @keyframes float-up {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-200px); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Welcome Panel (Left Side) -->
+        <div class="panel welcome-panel">
+            <h1>WELCOME TO THE WEBSITE</h1>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            
+            <div class="illustration">
+                <div class="rocket-bg"></div>
+                <div class="star star1"></div>
+                <div class="star star2"></div>
+                <div class="star star3"></div>
+                <div class="cloud">
+                    <div class="cloud-part"></div>
+                    <div class="cloud-part"></div>
+                    <div class="cloud-part"></div>
+                </div>
+                <div class="rocket">
+                    <div class="rocket-body">
+                        <div class="window"></div>
+                        <div class="fin fin-left"></div>
+                        <div class="fin fin-right"></div>
+                        <div class="flame"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Login Panel (Right Side) -->
+        <div class="panel login-panel">
+            <form class="login-form">
+                <h2>USER LOGIN</h2>
+                
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                
+                <div class="options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember"> Remember
+                    </label>
+                    <a href="#">Forgot Password</a>
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+                
+                <p class="signup-link">
+                    <a href="#">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
