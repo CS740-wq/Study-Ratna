@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK Education - Profile</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+    <style>
+        /* --- CSS Variables for Easy Theming --- */
+        :root {
+            --font-family: 'Poppins', sans-serif;
+            --bg-light: #F9FAFB;
+            --card-bg: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --accent-color: #3B82F6;
+            --destructive-color: #EF4444;
+            --icon-color: #9CA3AF;
+            --gradient-start: #E0C3FC;
+            --gradient-end: #8EC5FC;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --border-color: #E5E7EB;
+        }
+
+        /* --- Basic Reset & Body Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: #E0E0E0; /* BG outside the phone */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 2rem;
+        }
+
+        /* --- Mobile Screen Simulation --- */
+        .mobile-container {
+            width: 100%;
+            max-width: 390px;
+            height: 844px; /* iPhone 13 Pro dimensions */
+            background-color: var(--bg-light);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+        .main-content::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for a cleaner look */
+        }
+
+        /* --- Top Section: User Identity --- */
+        .profile-header {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            padding: 2.5rem 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .profile-photo-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .edit-photo-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .edit-photo-btn:hover {
+            transform: scale(1.1);
+        }
+        .edit-photo-btn i {
+            font-size: 14px;
+        }
+
+        .user-details h1 {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-details .contact-info {
+            font-size: 0.875rem; /* 14px */
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .user-details .course-info {
+            font-size: 1rem; /* 16px */
+            font-weight: 500;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* --- Middle Section: Card Navigation --- */
+        .profile-menu {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .menu-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
+        }
+
+        .menu-card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            font-size: 18px;
+        }
+        
+        .menu-card .fa-chevron-right {
+            margin-left: auto;
+            color: var(--icon-color);
+        }
+
+        /* Card-specific icon styles */
+        .menu-card.my-courses .icon { background-color: #e0f2fe; color: #0ea5e9; }
+        .menu-card.my-downloads .icon { background-color: #e0e7ff; color: #4f46e5; }
+        .menu-card.progress .icon { background-color: #d1fae5; color: #059669; }
+        .menu-card.edit-profile .icon { background-color: #ffedd5; color: #f97316; }
+        .menu-card.settings .icon { background-color: #e5e7eb; color: #4b5563; }
+        .menu-card.help .icon { background-color: #fee2e2; color: #dc2626; }
+        .menu-card.invite .icon { background-color: #fef9c3; color: #ca8a04; }
+        .menu-card.logout .icon { background-color: #fee2e2; }
+
+        /* Highlight specific cards */
+        .menu-card.edit-profile span {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .menu-card.logout span {
+            color: var(--destructive-color);
+            font-weight: 600;
+        }
+        .menu-card.logout .icon {
+            color: var(--destructive-color);
+        }
+
+        /* --- Bottom Navigation Bar --- */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--icon-color);
+            font-size: 0.75rem; /* 12px */
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .nav-item i {
+            font-size: 1.25rem; /* 20px */
+        }
+        .nav-item.active {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        
+        <!-- Main Scrollable Content -->
+        <main class="main-content">
+            
+            <!-- Top Section: Header -->
+            <header class="profile-header">
+                <div class="profile-photo-container">
+                    <img src="https://i.pravatar.cc/150?u=adityakumar" alt="Profile Photo" class="profile-photo">
+                    <label for="file-upload" class="edit-photo-btn">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input id="file-upload" type="file" accept="image/jpeg, image/png" style="display:none;">
+                </div>
+                <div class="user-details">
+                    <h1>Aditya Kumar</h1>
+                    <div class="contact-info">
+                       <span><i class="fas fa-envelope fa-xs"></i> digitaladitya402@gmail.com</span>
+                       <span><i class="fas fa-phone fa-xs"></i> +91-8294523068</span>
+                    </div>
+                    <div class="course-info">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Class 12 Science - PCM</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Middle Section: Navigation Cards -->
+            <section class="profile-menu">
+                <a href="#" class="menu-card my-courses">
+                    <div class="icon"><i class="fas fa-book-open"></i></div>
+                    <span>My Courses</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-card my-downloads">
+                    <div class="icon"><i class="fas fa-download"></i></div>
+                    <span>My Downloads</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-card progress">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <span>Progress & Quizzes</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-card edit-profile">
+                    <div class="icon"><i class="fas fa-user-edit"></i></div>
+                    <span>Edit Profile</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-card settings">
+                    <div class="icon"><i class="fas fa-cog"></i></div>
+                    <span>Settings</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-card help">
+                    <div class="icon"><i class="fas fa-question-circle"></i></div>
+                    <span>Help & Support</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-card invite">
+                    <div class="icon"><i class="fas fa-gift"></i></div>
+                    <span>Invite & Earn</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" id="logout-btn" class="menu-card logout">
+                    <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+                    <span>Logout</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <div class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-layer-group"></i>
+                <span>Batches</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-pencil-ruler"></i>
+                <span>Practice</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Study Stuff</span>
+            </div>
+            <div class="nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // --- JavaScript for Interactivity ---
+
+        // 1. Logout Confirmation Dialog
+        const logoutButton = document.getElementById('logout-btn');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function(event) {
+                // Prevent the link from navigating immediately
+                event.preventDefault(); 
+
+                // Show a confirmation dialog
+                const isConfirmed = confirm('Are you sure you want to log out of your account?');
+                
+                if (isConfirmed) {
+                    // In a real app, you would clear the session/token here.
+                    // For this demo, we'll just show an alert and simulate redirection.
+                    alert('Logging you out...');
+                    console.log('User logged out.');
+                    // Example: window.location.href = '/login'; 
+                } else {
+                    console.log('Logout cancelled.');
+                }
+            });
+        }
+
+        // 2. Image Upload Simulation
+        const fileUploadInput = document.getElementById('file-upload');
+        const profilePhoto = document.querySelector('.profile-photo');
+
+        if (fileUploadInput && profilePhoto) {
+            fileUploadInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    // Check if the file is a JPG or PNG
+                    if (file.type === "image/jpeg" || file.type === "image/png") {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            // Show a preview of the selected image
+                            profilePhoto.src = e.target.result;
+                            
+                            // In a real app, you would now upload this to a server.
+                            // For this demo, we'll show a success message.
+                            alert('Image selected! In a real app, this would be uploaded and saved.');
+                            console.log('Simulating image upload...');
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        alert('Please select a JPG or PNG file only.');
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
