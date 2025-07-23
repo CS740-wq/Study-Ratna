@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlock Your Full Learning Journey!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-indigo: #0a043c;
+            --deep-blue: #03001e;
+            --electric-blue: #2c74b3;
+            --glow-cyan: #00f6ff;
+            --light-text: #e0e0e0;
+            --primary-text: #ffffff;
+            --glass-bg: rgba(15, 23, 42, 0.4);
+            --border-color: rgba(0, 246, 255, 0.2);
+            --expired-red: #ff4d4d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--deep-blue);
+            color: var(--light-text);
+            background-image:
+                radial-gradient(circle at 15% 15%, var(--electric-blue) 0%, transparent 25%),
+                radial-gradient(circle at 85% 75%, var(--dark-indigo) 0%, transparent 30%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 3D Floating Shapes Background */
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            list-style: none;
+            display: block;
+            border-radius: 50%;
+            background: var(--border-color);
+            backdrop-filter: blur(5px);
+            animation: float 20s linear infinite;
+        }
+
+        .shape-1 { width: 40px; height: 40px; left: 10%; bottom: -50px; animation-duration: 22s; }
+        .shape-2 { width: 25px; height: 25px; left: 25%; bottom: -50px; animation-duration: 18s; animation-delay: 2s; }
+        .shape-3 { width: 60px; height: 60px; left: 50%; bottom: -50px; animation-duration: 25s; animation-delay: 5s; }
+        .shape-4 { width: 30px; height: 30px; left: 75%; bottom: -50px; animation-duration: 16s; animation-delay: 1s; }
+        .shape-5 { width: 50px; height: 50px; left: 90%; bottom: -50px; animation-duration: 28s; animation-delay: 7s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Entrance Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 6rem 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            color: var(--primary-text);
+            background: linear-gradient(90deg, var(--primary-text), var(--glow-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 246, 255, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            margin-top: 1rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--light-text);
+            animation: fadeInUp 1s ease-out 0.2s;
+            animation-fill-mode: backwards;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+        }
+        
+        .features h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-text);
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+            transform-style: preserve-3d;
+        }
+        
+        .feature-card:hover {
+            box-shadow: 0 0 30px var(--border-color);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: iconFloat 4s ease-in-out infinite;
+        }
+        
+        .feature-card:nth-child(2) .feature-icon { animation-delay: 0.5s; }
+        .feature-card:nth-child(3) .feature-icon { animation-delay: 1s; }
+        .feature-card:nth-child(4) .feature-icon { animation-delay: 0.3s; }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+        }
+
+        /* Quote Section */
+        .quote {
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            background: rgba(10, 4, 60, 0.3);
+            border-radius: 20px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quote blockquote {
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            color: var(--primary-text);
+            position: relative;
+        }
+
+        .quote blockquote::before, .quote blockquote::after {
+            font-size: 5rem;
+            color: var(--electric-blue);
+            opacity: 0.5;
+            position: absolute;
+        }
+
+        .quote blockquote::before { content: '“'; left: -2rem; top: -2rem; }
+        .quote blockquote::after { content: '”'; right: -2rem; bottom: -3rem; }
+
+        /* Pricing & CTA Section */
+        .pricing {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, transparent, var(--dark-indigo));
+            border-radius: 50% 50% 0 0 / 100px;
+            margin-top: 4rem;
+        }
+        
+        .pricing h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--primary-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing p {
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+            color: var(--light-text);
+        }
+
+        /* --- NEW: Countdown Timer Styles --- */
+        .urgency-timer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .urgency-headline {
+            font-weight: 600;
+            color: var(--glow-cyan);
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px var(--glow-cyan);
+        }
+
+        #countdown {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .time-block {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.2rem;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+
+        .time-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-text);
+        }
+
+        .time-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--light-text);
+            letter-spacing: 1px;
+        }
+
+        .time-separator {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--glow-cyan);
+            padding-bottom: 1rem;
+            text-shadow: 0 0 8px var(--glow-cyan);
+        }
+        
+        .expired-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--expired-red);
+            text-shadow: 0 0 10px var(--expired-red);
+        }
+        /* --- End of Timer Styles --- */
+
+        /* Glowing 3D Button */
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-text);
+            background: linear-gradient(90deg, var(--electric-blue), var(--glow-cyan));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            transform: perspective(1px) translateZ(0);
+            box-shadow: 0 5px 15px rgba(44, 116, 179, 0.4);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, var(--glow-cyan), var(--electric-blue));
+            filter: blur(15px);
+            opacity: 0.7;
+            transform: scale(0.9);
+            transition: opacity 0.3s ease-out;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 246, 255, 0.5);
+        }
+        
+        .cta-button:hover:before {
+            opacity: 1;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+    </div>
+
+    <div class="container">
+        <header class="hero">
+            <h1>🎓 Unlock Your Full Learning Journey!</h1>
+            <p>🚀 Access all batches, lectures, classes, notes & support – all in one place.</p>
+        </header>
+
+        <main>
+            <section class="features reveal">
+                <h2>✨ What You Get:</h2>
+                <div class="features-grid">
+                    <div class="feature-card tilt-card">
+                        <div class="feature-icon">♾️</div>
+                        <h3>Lifetime Access to All Batches</h3>
+                        <p>✅ Pay once and get unlimited access to all current and future course batches forever.</p>
+                    </div>
+                    <div class="feature-card tilt-card">
+                        <div class="feature-icon">🎬</div>
+                        <h3>Detailed Video Lectures</h3>
+                        <p>✅ Crystal-clear video lessons from industry experts, available 24/7 on any device.</p>
+                    </div>
+                    <div class="feature-card tilt-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Class Notes & PDF Materials</h3>
+                        <p>✅ Download comprehensive notes, cheat sheets, and PDF resources for offline study.</p>
+                    </div>
+                    <div class="feature-card tilt-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>Premium Doubt Support</h3>
+                        <p>✅ Get your questions answered quickly by our dedicated team of mentors and instructors.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quote reveal">
+                <blockquote>💡 “Invest in your future. Success begins with the right resources.”</blockquote>
+            </section>
+
+            <section class="pricing reveal">
+                <h2>🔐 Upgrade to Premium – ₹1499</h2>
+                <p>One-Time Payment – No Hidden Charges or Monthly Fees</p>
+                
+                <!-- NEW: URGENCY COUNTDOWN TIMER -->
+                <div class="urgency-timer">
+                    <h3 class="urgency-headline">⚡️ Flash Offer Ends In:</h3>
+                    <div id="countdown">
+                        <!-- Timer will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <a href="#" class="cta-button">➡️ Unlock Premium Access</a>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // On-Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // 3D Tilt Effect for Feature Cards
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach(card => {
+            const height = card.clientHeight;
+            const width = card.clientWidth;
+            card.addEventListener('mousemove', (e) => {
+                const xVal = e.layerX;
+                const yVal = e.layerY;
+                const yRotation = 20 * ((xVal - width / 2) / width);
+                const xRotation = -20 * ((yVal - height / 2) / height);
+                const string = `perspective(500px) scale(1.03) rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
+                card.style.transform = string;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(500px) scale(1) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // --- NEW: 24-HOUR COUNTDOWN TIMER LOGIC ---
+        const countdownElement = document.getElementById('countdown');
+        const countDownDate = new Date().getTime() + (24 * 60 * 60 * 1000);
+
+        const timerInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                countdownElement.innerHTML = "<div class='expired-text'>OFFER EXPIRED</div>";
+                return;
+            }
+
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const format = (num) => (num < 10 ? '0' + num : num);
+
+            countdownElement.innerHTML = `
+                <div class="time-block">
+                    <span class="time-value">${format(hours)}</span>
+                    <span class="time-label">Hours</span>
+                </div>
+                <span class="time-separator">:</span>
+                <div class="time-block">
+                    <span class="time-value">${format(minutes)}</span>
+                    <span class="time-label">Mins</span>
+                </div>
+                <span class="time-separator">:</span>
+                <div class="time-block">
+                    <span class="time-value">${format(seconds)}</span>
+                    <span class="time-label">Secs</span>
+                </div>
+            `;
+        }, 1000);
+    </script>
+
+</body>
+</html>
