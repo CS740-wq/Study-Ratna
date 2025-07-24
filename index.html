@@ -17,20 +17,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* CSS Variables for Easy Theme Management */
+        /* =================================================================== */
+        /* ============== 🎨 NEW FUTURISTIC COLOR THEME 🎨 ================== */
+        /* =================================================================== */
         :root {
-            /* Original Theme Variables */
-            --primary-purple: #A162F7;
-            --light-purple: #F3EFFF;
-            --dark-text: #343434;
-            --light-text: #666;
-            --banner-yellow: #FFD449;
-            --quote-blue: #49a7ff;
+            /* New Theme Variables (Futuristic Purple & Pink) */
+            --theme-bg-dark: #3e1b72;
+            --theme-accent-pink: #E84393;
+            --theme-accent-purple: #8A4FFF;
+            --theme-pink-hover: #c21a68;
+            --theme-text-light: #f0eafc;
+            --theme-text-dark: #2c003e;
+            
+            --bg-main: #f5f7fa; /* Soft neutral background */
+            --bg-cards: #FFFFFF;
+            --text-muted: #a9a4b8;
+            --shadow-color: rgba(138, 79, 255, 0.2); /* Shadow based on light purple */
+            --red-badge: #FF4D4D; /* Unchanged for notifications */
             --white: #FFFFFF;
-            --shadow-color: rgba(161, 98, 247, 0.15);
-            --red-badge: #FF4D4D;
 
-            /* Popup Theme Variables */
+            /* Popup Theme Variables (UNCHANGED - Kept the premium gold/charcoal look) */
             --charcoal-bg: #121212; 
             --card-bg: #1E1E1E; 
             --gold-primary: #D4AF37;
@@ -53,30 +59,30 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f4f6f8;
-            color: var(--dark-text);
+            background-color: var(--bg-main); /* CHANGED */
+            color: var(--theme-text-dark); /* CHANGED */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align to top for better view on desktop */
+            align-items: flex-start;
             min-height: 100vh;
             padding: 20px 0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
         
         body.popup-open {
-            overflow: hidden; /* Prevent scrolling of main content when popup is open */
+            overflow: hidden;
         }
 
         /* Mobile Screen Container */
         .mobile-screen {
             width: 100%;
             max-width: 420px;
-            background-color: var(--white);
+            background-color: var(--bg-cards); /* CHANGED */
             border-radius: 40px;
             box-shadow: 0 10px 60px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             position: relative;
-            padding-bottom: 80px; /* Space for the bottom nav */
+            padding-bottom: 80px;
             animation: fadeIn 0.5s ease-in-out;
         }
         
@@ -86,7 +92,7 @@
 
         /* 🔝 Header Section */
         .app-header {
-            background: linear-gradient(135deg, var(--primary-purple), #864ce8);
+            background: linear-gradient(135deg, var(--theme-accent-purple), var(--theme-bg-dark)); /* CHANGED */
             color: var(--white);
             padding: 20px;
             display: flex;
@@ -118,12 +124,12 @@
         }
         .header-icon i:hover {
             transform: scale(1.2) rotate(15deg);
-            color: var(--banner-yellow);
+            color: var(--theme-accent-pink); /* CHANGED */
         }
 
         /* 👋 Welcome Banner */
         .welcome-banner {
-            background-color: var(--banner-yellow);
+            background-color: var(--theme-accent-pink); /* CHANGED */
             border-radius: 20px;
             padding: 20px;
             margin: 20px 20px 0;
@@ -136,18 +142,18 @@
         .welcome-banner p {
             font-size: 18px;
             font-weight: 700;
-            color: var(--dark-text);
+            color: var(--white); /* CHANGED for better contrast */
         }
 
         /* 💡 Motivational Quote Section */
         .quote-section {
-            background: linear-gradient(135deg, var(--quote-blue), #2e8ce6);
-            color: var(--white);
+            background: var(--theme-bg-dark); /* CHANGED */
+            color: var(--theme-text-light); /* CHANGED */
             border-radius: 20px;
             padding: 20px;
             margin: 20px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(73, 167, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(62, 27, 114, 0.3); /* CHANGED */
             transform: translateY(20px);
             opacity: 0;
             animation: slideUpFadeIn 0.7s ease-out 0.4s forwards;
@@ -185,17 +191,17 @@
         }
 
         .module-card {
-            background-color: var(--white);
+            background-color: var(--bg-cards);
             border-radius: 18px;
             padding: 12px;
-            box-shadow: 0 5px 20px var(--shadow-color);
+            box-shadow: 0 5px 20px var(--shadow-color); /* Variable is updated */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             text-decoration: none;
-            color: var(--dark-text);
+            color: var(--theme-text-dark); /* CHANGED */
             position: relative;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
             aspect-ratio: 1 / 1;
@@ -209,7 +215,7 @@
         }
 
         .module-card:hover {
-            box-shadow: 0 12px 30px rgba(161, 98, 247, 0.3);
+            box-shadow: 0 12px 30px rgba(138, 79, 255, 0.3); /* CHANGED */
             transform: rotateY(15deg) rotateX(10deg) scale(1.05);
         }
         
@@ -240,7 +246,7 @@
             position: absolute;
             top: 8px;
             right: 8px;
-            background-color: var(--red-badge);
+            background-color: var(--red-badge); /* Unchanged */
             color: var(--white);
             font-size: 9px;
             font-weight: 700;
@@ -256,12 +262,12 @@
             left: 0;
             right: 0;
             width: 100%;
-            background-color: var(--white);
+            background-color: var(--bg-cards);
             display: flex;
             justify-content: space-around;
             align-items: center;
             padding: 10px 0;
-            border-top: 1px solid #e0c8ff;
+            border-top: 1px solid #e0d8ff; /* CHANGED */
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
@@ -272,11 +278,11 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: var(--light-text);
+            color: var(--text-muted); /* CHANGED */
             font-size: 12px;
             font-weight: 600;
             transition: color 0.3s ease;
-            flex: 1; /* Ensure equal spacing */
+            flex: 1;
             text-align: center;
         }
         
@@ -287,127 +293,56 @@
         }
         
         .nav-item.active {
-            color: var(--primary-purple);
+            color: var(--theme-accent-purple); /* CHANGED */
         }
         
-        .nav-item:active i { /* FIX: Changed from .clicked to :active for better link behavior */
+        .nav-item:active i {
             animation: nav-icon-bounce 0.5s ease;
         }
 
-        /* ✨ Animations & Motion Effects */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes slideUpFadeIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes pulse-badge {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 77, 77, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
-        }
-        @keyframes nav-icon-bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
+        /* ✨ Animations & Motion Effects (Unchanged) */
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUpFadeIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse-badge { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 77, 77, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); } }
+        @keyframes nav-icon-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
         /* ================================== */
         /* ========= POPUP STYLES =========== */
+        /* == (UNCHANGED - Kept original premium theme) == */
         /* ================================== */
         .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            display: none; /* Hidden by default */
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            animation: fadeIn 0.3s ease-out;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px);
+            z-index: 1000; display: none; justify-content: center; align-items: center;
+            padding: 20px; animation: fadeIn 0.3s ease-out;
         }
-        
         .popup-content {
-            position: relative;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 15px;
-            animation: slideUpFadeIn 0.4s ease-out;
+            position: relative; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;
+            border-radius: 15px; animation: slideUpFadeIn 0.4s ease-out;
         }
-        /* Scrollbar styling for popup content */
         .popup-content::-webkit-scrollbar { width: 8px; }
         .popup-content::-webkit-scrollbar-track { background: #2c2c2c; }
         .popup-content::-webkit-scrollbar-thumb { background-color: var(--gold-primary); border-radius: 10px; border: 2px solid #2c2c2c; }
-
-
         .popup-close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            font-size: 24px;
-            line-height: 32px;
-            text-align: center;
-            cursor: pointer;
-            z-index: 1001;
-            transition: background 0.3s, transform 0.3s;
+            position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.5);
+            color: #fff; border: 2px solid #fff; border-radius: 50%; width: 35px; height: 35px;
+            font-size: 24px; line-height: 32px; text-align: center; cursor: pointer;
+            z-index: 1001; transition: background 0.3s, transform 0.3s;
         }
-        .popup-close-btn:hover {
-            background: var(--gold-primary);
-            color: var(--charcoal-bg);
-            border-color: var(--gold-primary);
-            transform: rotate(90deg);
-        }
-
+        .popup-close-btn:hover { background: var(--gold-primary); color: var(--charcoal-bg); border-color: var(--gold-primary); transform: rotate(90deg); }
         .premium-page {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--charcoal-bg);
-            color: var(--text-primary);
+            font-family: 'Inter', sans-serif; background-color: var(--charcoal-bg); color: var(--text-primary);
             background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="%23222222" fill-opacity="0.4"><circle fill="%23222222" cx="50" cy="50" r="4"/><g><circle cx="10" cy="10" r="4"/><circle cx="90" cy="90" r="4"/></g><g><circle cx="10" cy="90" r="4"/><circle cx="90" cy="10" r="4"/></g><g><circle cx="10" cy="50" r="2"/><circle cx="90" cy="50" r="2"/></g><g><circle cx="50" cy="10" r="2"/><circle cx="50" cy="90" r="2"/></g></g><path d="M10 10 L50 50 L10 90 M90 10 L50 50 L90 90 M10 50 L90 50 M50 10 L50 90" stroke-width="0.5" stroke="%23222222" fill="none" stroke-opacity="0.4"/></svg>');
-            background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 4rem 1.5rem;
-            width: 100%;
-            margin: 0;
-            gap: 2.5rem;
-            border-radius: 15px; /* Added for consistency */
+            background-attachment: fixed; display: flex; flex-direction: column; align-items: center;
+            padding: 4rem 1.5rem; width: 100%; margin: 0; gap: 2.5rem; border-radius: 15px;
         }
-
         .main-headline {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            text-align: center;
-            color: var(--gold-primary);
-            text-shadow: 0 0 8px var(--glow-color), 0 0 20px var(--glow-color), 0 0 40px rgba(212, 175, 55, 0.3);
+            font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); text-align: center;
+            color: var(--gold-primary); text-shadow: 0 0 8px var(--glow-color), 0 0 20px var(--glow-color), 0 0 40px rgba(212, 175, 55, 0.3);
         }
-
         .animation-container { perspective: 1000px; }
         .glowing-orb {
             width: 120px; height: 120px;
@@ -418,11 +353,9 @@
         }
         .glowing-orb::before {
             content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
-            border-top: 2px solid rgba(255, 255, 255, 0.3);
-            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid rgba(255, 255, 255, 0.3); border-left: 2px solid rgba(255, 255, 255, 0.1);
             animation: rotate-reverse 15s infinite linear;
         }
-
         .features-section { width: 100%; }
         .features-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
         .feature-card {
@@ -437,12 +370,10 @@
         .feature-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); border-color: var(--gold-primary); }
         .feature-card i { color: var(--gold-primary); font-size: 1.5rem; }
         .feature-card span { font-size: 1rem; line-height: 1.5; }
-
         .cta-section {
             width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
             margin-top: 1rem;
         }
-
         .urgency-timer-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
         .urgency-headline { font-size: 1.2rem; font-weight: 600; color: var(--gold-secondary); letter-spacing: 0.5px; text-shadow: 0 0 5px var(--glow-color); }
         #countdown-timer { display: flex; align-items: center; gap: 0.75rem; font-family: 'Inter', sans-serif; }
@@ -451,7 +382,6 @@
         .time-label { font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
         .time-separator { font-size: 1.75rem; color: var(--gold-primary); transform: translateY(-8px); animation: blink 2s infinite; }
         .expired-text { font-size: 1.5rem; font-weight: bold; color: #ff4d4d; padding: 1rem; }
-        
         .cta-button {
             display: inline-block; padding: 1rem 2.5rem; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600;
             color: var(--charcoal-bg); background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
@@ -460,33 +390,18 @@
         }
         .cta-button:hover, .cta-button:focus { transform: scale(1.05) translateY(-5px); box-shadow: 0 0 25px var(--glow-color), 0 0 45px var(--glow-color), inset 0 1px 3px rgba(255, 255, 255, 0.6); }
         .trust-text { color: var(--text-secondary); font-size: 0.9rem; }
-
         @keyframes rotate { from { transform: rotate3d(0, 1, 0, 0deg); } to { transform: rotate3d(0, 1, 0, 360deg); } }
         @keyframes rotate-reverse { from { transform: rotate3d(1, 1, 0, 0deg); } to { transform: rotate3d(1, 1, 0, 360deg); } }
         @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.85; } }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 50% { opacity: 0.5; } }
-        
-        @media (min-width: 480px) {
-            .features-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        }
-
-        /* 🖥️ Desktop Responsiveness (Original) */
-        @media (min-width: 1024px) {
-            body {
-                align-items: center;
-            }
-            .mobile-screen {
-                max-width: 1200px;
-            }
-            .modules-grid {
-                grid-template-columns: repeat(8, 1fr);
-            }
-        }
+        @media (min-width: 480px) { .features-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } }
+        @media (min-width: 1024px) { body { align-items: center; } .mobile-screen { max-width: 1200px; } .modules-grid { grid-template-columns: repeat(8, 1fr); } }
     </style>
 </head>
 <body>
 
+    <!-- HTML Body remains unchanged... -->
     <div class="mobile-screen">
         <!-- 🔝 Header Section -->
         <header class="app-header">
@@ -661,7 +576,6 @@
             </div>
         </main>
         
-        <!-- FIX: Bottom navigation bar correctly structured inside a <nav> element -->
         <nav class="bottom-nav">
             <a href="popup1.html" class="nav-item active">
                 <i class="fa-solid fa-house"></i>
@@ -686,9 +600,7 @@
         </nav>
     </div>
 
-    <!-- ================================== -->
-    <!-- ========= POPUP HTML ============= -->
-    <!-- ================================== -->
+    <!-- Popup HTML and Script remains unchanged -->
     <div id="premiumPopup" class="popup-overlay">
         <div class="popup-content">
             <button id="popupCloseBtn" class="popup-close-btn">×</button>
@@ -760,9 +672,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
     moduleCards.forEach(card => observer.observe(card));
 
-    // FIX: The problematic JavaScript click listeners that prevented navigation have been removed. 
-    // The <a> tags on the module cards and nav bar will now function correctly.
-
     // --- NEW POPUP SCRIPT LOGIC ---
     
     // 1. Popup Elements
@@ -790,7 +699,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (popupOverlay) {
-        // Close popup when clicking on the dark overlay
         popupOverlay.addEventListener('click', (event) => {
             if (event.target === popupOverlay) {
                 hidePopup();
@@ -798,9 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // FIX: Changed from setInterval to setTimeout.
-    // The popup will now appear only ONCE after 5 seconds.
-    setTimeout(showPopup, 5000); // 5000 milliseconds = 5 seconds
+    setTimeout(showPopup, 5000); 
 
     // --- Premium Popup Countdown Timer Logic ---
     let countDownDate = new Date().getTime() + (24 * 60 * 60 * 1000); // 24 hours from now
