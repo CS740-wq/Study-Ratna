@@ -14,20 +14,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
     <style>
-        /* --- CSS Variables for Easy Theming --- */
+        /* =================================================================== */
+        /* ============== 🎨 NEW FUTURISTIC COLOR THEME 🎨 ================== */
+        /* =================================================================== */
         :root {
             --font-family: 'Poppins', sans-serif;
-            --bg-light: #F9FAFB;
+            
+            /* New Theme Variables */
+            --theme-bg-dark: #3e1b72;
+            --theme-accent-pink: #E84393;
+            --theme-accent-purple: #8A4FFF;
+            --theme-text-light: #f0eafc;
+            --theme-text-dark: #2c003e;
+
+            /* Mapped Variables */
+            --bg-light: #f5f7fa; /* Softer main background */
             --card-bg: #FFFFFF;
-            --text-primary: #1F2937;
-            --text-secondary: #6B7280;
-            --accent-color: #3B82F6;
-            --destructive-color: #EF4444;
-            --icon-color: #9CA3AF;
-            --gradient-start: #E0C3FC;
-            --gradient-end: #8EC5FC;
-            --shadow-color: rgba(0, 0, 0, 0.05);
-            --border-color: #E5E7EB;
+            --text-primary: var(--theme-text-dark);
+            --text-secondary: #6e6a7c; /* Muted purple-grey */
+            --accent-color: var(--theme-accent-pink);
+            --destructive-color: #EF4444; /* Kept red for universal warning color */
+            --icon-color: #a9a4b8; /* Muted purple-grey for inactive icons */
+            --shadow-color: rgba(138, 79, 255, 0.1);
+            --border-color: #e0d8ff; /* Light purple border */
         }
 
         /* --- Basic Reset & Body Styles --- */
@@ -39,7 +48,7 @@
 
         body {
             font-family: var(--font-family);
-            background-color: #E0E0E0; /* BG outside the phone */
+            background-color: #333; /* Darker BG outside the phone */
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -51,9 +60,9 @@
         .mobile-container {
             width: 100%;
             max-width: 390px;
-            height: 844px; /* iPhone 13 Pro dimensions */
+            height: 844px;
             background-color: var(--bg-light);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
             border-radius: 40px;
             position: relative;
             overflow: hidden;
@@ -64,20 +73,20 @@
         .main-content {
             flex-grow: 1;
             overflow-y: auto;
-            padding-bottom: 80px; /* Space for bottom nav */
+            padding-bottom: 80px;
         }
         .main-content::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for a cleaner look */
+            display: none;
         }
 
         /* --- Top Section: User Identity --- */
         .profile-header {
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            background: linear-gradient(135deg, var(--theme-accent-pink) 0%, var(--theme-bg-dark) 100%);
             padding: 2.5rem 1.5rem 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: var(--text-primary);
+            color: var(--theme-text-light); /* Changed for dark background */
             text-align: center;
         }
 
@@ -92,7 +101,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid var(--card-bg);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .edit-photo-btn {
@@ -101,7 +110,7 @@
             right: 5px;
             width: 30px;
             height: 30px;
-            background-color: var(--accent-color);
+            background-color: var(--accent-color); /* Now pink */
             color: white;
             border-radius: 50%;
             border: 2px solid white;
@@ -119,14 +128,15 @@
         }
 
         .user-details h1 {
-            font-size: 1.5rem; /* 24px */
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
         }
 
         .user-details .contact-info {
-            font-size: 0.875rem; /* 14px */
-            color: var(--text-secondary);
+            font-size: 0.875rem;
+            color: var(--theme-text-light);
+            opacity: 0.8; /* Slightly muted for hierarchy */
             margin-bottom: 0.75rem;
             display: flex;
             flex-direction: column;
@@ -140,9 +150,10 @@
         }
         
         .user-details .course-info {
-            font-size: 1rem; /* 16px */
+            font-size: 1rem;
             font-weight: 500;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(240, 234, 252, 0.15); /* Translucent light text color */
+            color: var(--theme-text-light);
             padding: 0.25rem 0.75rem;
             border-radius: 12px;
             display: inline-flex;
@@ -184,6 +195,9 @@
             align-items: center;
             margin-right: 1rem;
             font-size: 18px;
+            /* UNIFIED STYLING FOR ICONS */
+            background-color: rgba(138, 79, 255, 0.1); /* Translucent light purple */
+            color: var(--theme-accent-purple); /* Brighter purple for the icon */
         }
         
         .menu-card .fa-chevron-right {
@@ -191,27 +205,24 @@
             color: var(--icon-color);
         }
 
-        /* Card-specific icon styles */
-        .menu-card.my-courses .icon { background-color: #e0f2fe; color: #0ea5e9; }
-        .menu-card.my-downloads .icon { background-color: #e0e7ff; color: #4f46e5; }
-        .menu-card.progress .icon { background-color: #d1fae5; color: #059669; }
-        .menu-card.edit-profile .icon { background-color: #ffedd5; color: #f97316; }
-        .menu-card.settings .icon { background-color: #e5e7eb; color: #4b5563; }
-        .menu-card.help .icon { background-color: #fee2e2; color: #dc2626; }
-        .menu-card.invite .icon { background-color: #fef9c3; color: #ca8a04; }
-        .menu-card.logout .icon { background-color: #fee2e2; }
-
         /* Highlight specific cards */
         .menu-card.edit-profile span {
-            color: var(--accent-color);
+            color: var(--theme-accent-purple); /* Using purple for variety */
             font-weight: 600;
         }
-
+        
+        .menu-card.edit-profile .icon {
+            background-color: rgba(232, 67, 147, 0.1); /* Light pink bg */
+            color: var(--theme-accent-pink); /* Pink icon */
+        }
+        
         .menu-card.logout span {
             color: var(--destructive-color);
             font-weight: 600;
         }
+
         .menu-card.logout .icon {
+            background-color: rgba(239, 68, 68, 0.1); /* Light red */
             color: var(--destructive-color);
         }
 
@@ -237,15 +248,15 @@
             align-items: center;
             gap: 4px;
             color: var(--icon-color);
-            font-size: 0.75rem; /* 12px */
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
         }
         .nav-item i {
-            font-size: 1.25rem; /* 20px */
+            font-size: 1.25rem;
         }
         .nav-item.active {
-            color: var(--accent-color);
+            color: var(--accent-color); /* Now pink */
         }
     </style>
 </head>
@@ -349,31 +360,21 @@
     </div>
 
     <script>
-        // --- JavaScript for Interactivity ---
-
-        // 1. Logout Confirmation Dialog
+        // JavaScript remains unchanged as it handles functionality, not styling.
         const logoutButton = document.getElementById('logout-btn');
         if (logoutButton) {
             logoutButton.addEventListener('click', function(event) {
-                // Prevent the link from navigating immediately
                 event.preventDefault(); 
-
-                // Show a confirmation dialog
                 const isConfirmed = confirm('Are you sure you want to log out of your account?');
-                
                 if (isConfirmed) {
-                    // In a real app, you would clear the session/token here.
-                    // For this demo, we'll just show an alert and simulate redirection.
                     alert('Logging you out...');
                     console.log('User logged out.');
-                    // Example: window.location.href = '/login'; 
                 } else {
                     console.log('Logout cancelled.');
                 }
             });
         }
 
-        // 2. Image Upload Simulation
         const fileUploadInput = document.getElementById('file-upload');
         const profilePhoto = document.querySelector('.profile-photo');
 
@@ -381,17 +382,11 @@
             fileUploadInput.addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
-                    // Check if the file is a JPG or PNG
                     if (file.type === "image/jpeg" || file.type === "image/png") {
                         const reader = new FileReader();
                         reader.onload = function(e) {
-                            // Show a preview of the selected image
                             profilePhoto.src = e.target.result;
-                            
-                            // In a real app, you would now upload this to a server.
-                            // For this demo, we'll show a success message.
                             alert('Image selected! In a real app, this would be uploaded and saved.');
-                            console.log('Simulating image upload...');
                         }
                         reader.readAsDataURL(file);
                     } else {
@@ -400,7 +395,6 @@
                 }
             });
         }
-
     </script>
 </body>
 </html>
