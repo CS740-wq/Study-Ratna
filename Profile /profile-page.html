@@ -3,398 +3,402 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AK Education - Profile</title>
-
-    <!-- Google Fonts: Poppins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-
+    <title>Complete Profile Dashboard</title>
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Intl Tel Input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
     <style>
-        /* =================================================================== */
-        /* ============== 🎨 NEW FUTURISTIC COLOR THEME 🎨 ================== */
-        /* =================================================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
         :root {
-            --font-family: 'Poppins', sans-serif;
-            
-            /* New Theme Variables */
-            --theme-bg-dark: #3e1b72;
-            --theme-accent-pink: #E84393;
-            --theme-accent-purple: #8A4FFF;
-            --theme-text-light: #f0eafc;
-            --theme-text-dark: #2c003e;
-
-            /* Mapped Variables */
-            --bg-light: #f5f7fa; /* Softer main background */
-            --card-bg: #FFFFFF;
-            --text-primary: var(--theme-text-dark);
-            --text-secondary: #6e6a7c; /* Muted purple-grey */
-            --accent-color: var(--theme-accent-pink);
-            --destructive-color: #EF4444; /* Kept red for universal warning color */
-            --icon-color: #a9a4b8; /* Muted purple-grey for inactive icons */
-            --shadow-color: rgba(138, 79, 255, 0.1);
-            --border-color: #e0d8ff; /* Light purple border */
+            --dark-purple: #3e1b72;
+            --electric-pink: #E84393;
+            --light-purple: #8A4FFF;
+            --pink-hover: #c21a68;
+            --light-lavender: #f0eafc;
+            --white: #FFFFFF;
+            --bg-secondary: #2c1250;
+            --border-color: rgba(138, 79, 255, 0.2);
         }
 
-        /* --- Basic Reset & Body Styles --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* --- LIGHT THEME --- */
+        html.light-theme {
+            --dark-purple: #f4f6ff;
+            --electric-pink: #E84393;
+            --light-purple: #8A4FFF;
+            --pink-hover: #c21a68;
+            --light-lavender: #333333;
+            --white: #000000;
+            --bg-secondary: #ffffff;
+            --border-color: #e0e0e0;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: var(--font-family);
-            background-color: #333; /* Darker BG outside the phone */
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-secondary);
+            color: var(--light-lavender);
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
-            padding-top: 2rem;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* --- Mobile Screen Simulation --- */
-        .mobile-container {
+        .dashboard-container {
+            display: flex;
             width: 100%;
-            max-width: 390px;
-            height: 844px;
-            background-color: var(--bg-light);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-            border-radius: 40px;
-            position: relative;
+            max-width: 1200px;
+            height: 90vh;
+            max-height: 850px;
+            background-color: var(--dark-purple);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
             overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-secondary);
+            padding: 30px 0;
             display: flex;
             flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
         }
+        .profile-header { text-align: center; padding: 0 20px 30px 20px; border-bottom: 1px solid var(--border-color); }
+        .profile-picture {
+            position: relative; width: 120px; height: 120px;
+            border-radius: 50%; border: 4px solid var(--light-purple);
+            margin: 0 auto 15px; cursor: pointer;
+        }
+        .profile-picture img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .upload-icon {
+            position: absolute; bottom: 0; right: 0;
+            background-color: var(--electric-pink); color: var(--white);
+            border-radius: 50%; width: 30px; height: 30px;
+            display: flex; justify-content: center; align-items: center; font-size: 14px;
+        }
+        #file-upload-input { display: none; }
+        .profile-header h2 { color: var(--white); font-size: 22px; }
+        .profile-header p { font-size: 14px; color: var(--light-purple); }
 
-        .main-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding-bottom: 80px;
-        }
-        .main-content::-webkit-scrollbar {
-            display: none;
-        }
+        .completion-meter { margin-top: 15px; }
+        .completion-meter p { font-size: 12px; margin-bottom: 5px; }
+        .progress-bar { width: 100%; height: 8px; background-color: var(--dark-purple); border-radius: 4px; overflow: hidden; }
+        .progress { height: 100%; background: linear-gradient(90deg, var(--light-purple), var(--electric-pink)); border-radius: 4px; transition: width 0.5s ease-in-out; }
 
-        /* --- Top Section: User Identity --- */
-        .profile-header {
-            background: linear-gradient(135deg, var(--theme-accent-pink) 0%, var(--theme-bg-dark) 100%);
-            padding: 2.5rem 1.5rem 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--theme-text-light); /* Changed for dark background */
-            text-align: center;
-        }
+        .nav-menu { list-style: none; flex-grow: 1; margin-top: 10px; overflow-y: auto; padding-right: 5px;}
+        .nav-menu::-webkit-scrollbar { width: 4px; }
+        .nav-menu::-webkit-scrollbar-thumb { background: var(--light-purple); border-radius: 2px; }
+        .nav-menu::-webkit-scrollbar-track { background: transparent; }
 
-        .profile-photo-container {
-            position: relative;
-            margin-bottom: 1rem;
+        .nav-item a {
+            display: flex; align-items: center; padding: 15px 30px;
+            color: var(--light-lavender); text-decoration: none; font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+            border-left: 4px solid transparent;
         }
+        .nav-item a:hover { background-color: rgba(138, 79, 255, 0.1); color: var(--white); }
+        .nav-item a.active {
+            background-color: rgba(232, 67, 147, 0.1);
+            border-left-color: var(--electric-pink);
+            color: var(--electric-pink); font-weight: 600;
+        }
+        .nav-item a i { width: 30px; font-size: 18px; margin-right: 15px; text-align: center;}
 
-        .profile-photo {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--card-bg);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
+        .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
+        .main-content::-webkit-scrollbar { width: 6px; }
+        .main-content::-webkit-scrollbar-thumb { background: var(--light-purple); border-radius: 3px; }
+        .main-content::-webkit-scrollbar-track { background: transparent; }
 
-        .edit-photo-btn {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 30px;
-            height: 30px;
-            background-color: var(--accent-color); /* Now pink */
-            color: white;
-            border-radius: 50%;
-            border: 2px solid white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        .edit-photo-btn:hover {
-            transform: scale(1.1);
-        }
-        .edit-photo-btn i {
-            font-size: 14px;
-        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .user-details h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
+        .panel-header h1 { font-size: 32px; color: var(--white); margin-bottom: 10px;}
+        .panel-header p { opacity: 0.8; margin-bottom: 30px;}
 
-        .user-details .contact-info {
-            font-size: 0.875rem;
-            color: var(--theme-text-light);
-            opacity: 0.8; /* Slightly muted for hierarchy */
-            margin-bottom: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+        .form-section {
+            background-color: var(--bg-secondary); border-radius: 10px;
+            padding: 25px; margin-bottom: 25px; border: 1px solid var(--border-color);
         }
-        .contact-info span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .form-section h3 {
+            font-size: 20px; color: var(--light-purple);
+            margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color);
         }
+        .form-row { display: flex; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .form-row label { width: 200px; font-weight: 500; flex-shrink: 0; margin-bottom: 5px; }
+        .form-row .input-wrapper { flex-grow: 1; position: relative; min-width: 250px;}
+        input, .iti { width: 100%; }
+        input[type="text"], input[type="email"], input[type="date"], input[type="tel"] {
+            padding: 10px 15px; background-color: var(--dark-purple);
+            border: 1px solid var(--border-color); border-radius: 8px;
+            color: var(--light-lavender); font-size: 15px;
+        }
+        input:focus { outline: none; border-color: var(--light-purple); box-shadow: 0 0 10px rgba(138, 79, 255, 0.3); }
+
+        /* Intl Tel Input Styling */
+        .iti__input { padding-top: 10px !important; padding-bottom: 10px !important; }
+        .iti__country-list { background-color: var(--bg-secondary) !important; border-color: var(--border-color) !important; }
+        .iti__country { color: var(--light-lavender) !important; }
+        .iti__country:hover, .iti__country.iti__highlight { background-color: rgba(138, 79, 255, 0.1) !important; }
+        .iti__dial-code { color: var(--light-purple) !important; }
+
+        /* --- STYLES FOR NEW SECTIONS --- */
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .course-card {
+            background: var(--bg-secondary); border-radius: 10px; overflow: hidden;
+            border: 1px solid var(--border-color); transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .course-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+        .course-card img { width: 100%; height: 150px; object-fit: cover; }
+        .course-info { padding: 20px; }
+        .course-info h4 { font-size: 18px; color: var(--white); margin-bottom: 10px; }
         
-        .user-details .course-info {
-            font-size: 1rem;
-            font-weight: 500;
-            background-color: rgba(240, 234, 252, 0.15); /* Translucent light text color */
-            color: var(--theme-text-light);
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .download-list .download-item {
+            display: flex; align-items: center; padding: 15px;
+            background: var(--bg-secondary); border-radius: 8px; margin-bottom: 10px;
+            border: 1px solid var(--border-color);
         }
-        
-        /* --- Middle Section: Card Navigation --- */
-        .profile-menu {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .download-item i { font-size: 24px; color: var(--light-purple); margin-right: 20px; }
+        .download-info { flex-grow: 1; }
+        .download-info span { font-size: 12px; opacity: 0.7; }
 
-        .menu-card {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
-            text-decoration: none;
-            color: var(--text-primary);
-            font-weight: 500;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        .setting-row { display: flex; justify-content: space-between; align-items: center; }
+        .theme-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .theme-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; transition: .4s; border-radius: 34px;
         }
-        .menu-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
+        .slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 4px;
+            bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;
         }
+        input:checked + .slider { background-color: var(--light-purple); }
+        input:checked + .slider:before { transform: translateX(22px); }
 
-        .menu-card .icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 1rem;
-            font-size: 18px;
-            /* UNIFIED STYLING FOR ICONS */
-            background-color: rgba(138, 79, 255, 0.1); /* Translucent light purple */
-            color: var(--theme-accent-purple); /* Brighter purple for the icon */
+        .faq-item details {
+            background: var(--bg-secondary); border-radius: 8px; padding: 15px;
+            margin-bottom: 10px; border: 1px solid var(--border-color);
         }
-        
-        .menu-card .fa-chevron-right {
-            margin-left: auto;
-            color: var(--icon-color);
+        .faq-item summary { font-weight: 600; cursor: pointer; list-style: none; }
+        .faq-item summary::after {
+            content: '\f078'; font-family: 'Font Awesome 6 Free';
+            float: right; transition: transform 0.3s;
         }
+        .faq-item details[open] summary::after { transform: rotate(180deg); }
+        .faq-item p { margin-top: 15px; opacity: 0.9; line-height: 1.6; }
 
-        /* Highlight specific cards */
-        .menu-card.edit-profile span {
-            color: var(--theme-accent-purple); /* Using purple for variety */
-            font-weight: 600;
+        .invite-box { text-align: center; padding: 40px; }
+        .invite-box .icon { font-size: 50px; color: var(--electric-pink); margin-bottom: 20px; }
+        .invite-box h3 { font-size: 24px; color: var(--white); margin-bottom: 10px; }
+        .referral-link-wrapper { display: flex; margin: 30px 0; }
+        #referral-link {
+            flex-grow: 1; padding: 12px 15px; border: 1px dashed var(--light-purple);
+            background: var(--dark-purple); border-radius: 8px 0 0 8px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;
         }
+        #copy-link-btn { border-radius: 0 8px 8px 0; }
+        .social-share a { color: var(--white); font-size: 24px; margin: 0 15px; transition: color 0.3s; }
+        .social-share a:hover { color: var(--electric-pink); }
         
-        .menu-card.edit-profile .icon {
-            background-color: rgba(232, 67, 147, 0.1); /* Light pink bg */
-            color: var(--theme-accent-pink); /* Pink icon */
-        }
-        
-        .menu-card.logout span {
-            color: var(--destructive-color);
-            font-weight: 600;
-        }
+        .btn { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 600; transition: all 0.3s ease; }
+        .btn-primary { background-color: var(--electric-pink); color: var(--white); }
+        .btn-primary:hover { background-color: var(--pink-hover); }
 
-        .menu-card.logout .icon {
-            background-color: rgba(239, 68, 68, 0.1); /* Light red */
-            color: var(--destructive-color);
+        /* Toast Notifications */
+        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
+        .toast {
+            background-color: var(--bg-secondary); color: var(--light-lavender);
+            padding: 15px 20px; border-radius: 8px; margin-bottom: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); border-left: 5px solid var(--electric-pink);
+            opacity: 0; transform: translateX(100%); transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
-
-        /* --- Bottom Navigation Bar --- */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: var(--icon-color);
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .nav-item i {
-            font-size: 1.25rem;
-        }
-        .nav-item.active {
-            color: var(--accent-color); /* Now pink */
-        }
+        .toast.show { opacity: 1; transform: translateX(0); }
     </style>
 </head>
 <body>
 
-    <div class="mobile-container">
-        
-        <!-- Main Scrollable Content -->
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="profile-header">
+                <div class="profile-picture">
+                    <img id="profile-image" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Profile Picture">
+                    <div class="upload-icon"><i class="fa-solid fa-camera"></i></div>
+                    <input type="file" id="file-upload-input" accept="image/*">
+                </div>
+                <h2 id="user-name-header">Anjali Verma</h2>
+                <p id="user-handle-header">@anjali_v</p>
+                <div class="completion-meter">
+                    <p id="completion-text">Profile 75% Complete</p>
+                    <div class="progress-bar"><div class="progress" id="completion-progress"></div></div>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#personal-info" class="nav-link active"><i class="fa-solid fa-user-edit"></i> Personal Info</a></li>
+                <li class="nav-item"><a href="#my-courses" class="nav-link"><i class="fa-solid fa-book-open"></i> My Courses</a></li>
+                <li class="nav-item"><a href="#my-downloads" class="nav-link"><i class="fa-solid fa-download"></i> My Downloads</a></li>
+                <li class="nav-item"><a href="#settings" class="nav-link"><i class="fa-solid fa-cog"></i> Settings</a></li>
+                <li class="nav-item"><a href="#invite-earn" class="nav-link"><i class="fa-solid fa-gift"></i> Invite & Earn</a></li>
+                <li class="nav-item"><a href="#help-support" class="nav-link"><i class="fa-solid fa-question-circle"></i> Help & Support</a></li>
+            </ul>
+            <div class="nav-item" style="padding: 0 30px; margin-top: auto;">
+                <a href="#" onclick="alert('Logged out!')" style="background-color:rgba(232, 67, 147, 0.1); border-radius:8px; justify-content:center; border:none; color: var(--electric-pink);">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                </a>
+            </div>
+        </aside>
+
         <main class="main-content">
-            
-            <!-- Top Section: Header -->
-            <header class="profile-header">
-                <div class="profile-photo-container">
-                    <img src="https://i.pravatar.cc/150?u=adityakumar" alt="Profile Photo" class="profile-photo">
-                    <label for="file-upload" class="edit-photo-btn">
-                        <i class="fas fa-camera"></i>
-                    </label>
-                    <input id="file-upload" type="file" accept="image/jpeg, image/png" style="display:none;">
+            <!-- PERSONAL INFO -->
+            <div id="personal-info" class="tab-panel active">
+                <div class="panel-header">
+                    <h1>Personal Information</h1>
+                    <p>Update your photo and personal details here.</p>
                 </div>
-                <div class="user-details">
-                    <h1>Aditya Kumar</h1>
-                    <div class="contact-info">
-                       <span><i class="fas fa-envelope fa-xs"></i> digitaladitya402@gmail.com</span>
-                       <span><i class="fas fa-phone fa-xs"></i> +91-8294523068</span>
-                    </div>
-                    <div class="course-info">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>Class 12 Science - PCM</span>
-                    </div>
+                <div class="form-section">
+                    <h3>Basic Details</h3>
+                    <div class="form-row"><label for="fullName">Full Name</label><div class="input-wrapper"><input type="text" id="fullName" value="Anjali Verma"></div></div>
+                    <div class="form-row"><label for="email">Email</label><div class="input-wrapper"><input type="email" id="email" value="anjali.v@example.com"></div></div>
+                    <div class="form-row"><label for="phone">Mobile Number</label><div class="input-wrapper"><input type="tel" id="phone"></div></div>
+                    <div class="form-row"><label for="dob">Date of Birth</label><div class="input-wrapper"><input type="date" id="dob" value="1995-08-15"></div></div>
                 </div>
-            </header>
+                <div style="text-align: right;"><button id="save-personal-info" class="btn btn-primary">Save Changes</button></div>
+            </div>
 
-            <!-- Middle Section: Navigation Cards -->
-            <section class="profile-menu">
-                <a href="#" class="menu-card my-courses">
-                    <div class="icon"><i class="fas fa-book-open"></i></div>
-                    <span>My Courses</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-                <a href="#" class="menu-card my-downloads">
-                    <div class="icon"><i class="fas fa-download"></i></div>
-                    <span>My Downloads</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-                <a href="#" class="menu-card progress">
-                    <div class="icon"><i class="fas fa-chart-line"></i></div>
-                    <span>Progress & Quizzes</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-                <a href="Edit Profile.html" class="menu-card edit-profile">
-                    <div class="icon"><i class="fas fa-user-edit"></i></div>
-                    <span>Edit Profile</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-                <a href="#" class="menu-card settings">
-                    <div class="icon"><i class="fas fa-cog"></i></div>
-                    <span>Settings</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-                <a href="#" class="menu-card help">
-                    <div class="icon"><i class="fas fa-question-circle"></i></div>
-                    <span>Help & Support</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-                <a href="#" class="menu-card invite">
-                    <div class="icon"><i class="fas fa-gift"></i></div>
-                    <span>Invite & Earn</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-                <a href="#" id="logout-btn" class="menu-card logout">
-                    <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
-                    <span>Logout</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-            </section>
+            <!-- MY COURSES -->
+            <div id="my-courses" class="tab-panel">
+                <div class="panel-header"><h1>My Courses</h1><p>Continue your learning journey.</p></div>
+                <div class="course-grid">
+                    <div class="course-card"><img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=500" alt="Course"><div class="course-info"><h4>Complete Web Development</h4><div class="progress-bar"><div class="progress" style="width: 75%;"></div></div><button class="btn btn-primary" style="width:100%;">Continue</button></div></div>
+                    <div class="course-card"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500" alt="Course"><div class="course-info"><h4>Data Science with Python</h4><div class="progress-bar"><div class="progress" style="width: 40%;"></div></div><button class="btn btn-primary" style="width:100%;">Continue</button></div></div>
+                </div>
+            </div>
+
+            <!-- MY DOWNLOADS -->
+            <div id="my-downloads" class="tab-panel">
+                <div class="panel-header"><h1>My Downloads</h1><p>Access your downloaded notes and resources.</p></div>
+                <div class="download-list">
+                    <div class="download-item"><i class="fa-solid fa-file-pdf"></i><div class="download-info"><h4>JavaScript Notes.pdf</h4><span>2.5 MB</span></div><a href="#" download class="btn btn-primary" style="margin-left: auto;">Download</a></div>
+                    <div class="download-item"><i class="fa-solid fa-file-zipper"></i><div class="download-info"><h4>Project-Files.zip</h4><span>55.2 MB</span></div><a href="#" download class="btn btn-primary" style="margin-left: auto;">Download</a></div>
+                </div>
+            </div>
+
+            <!-- SETTINGS -->
+            <div id="settings" class="tab-panel">
+                <div class="panel-header"><h1>Settings</h1><p>Customize your experience.</p></div>
+                <div class="form-section"><h3>Appearance</h3><div class="setting-row"><p>Theme</p><label class="theme-switch"><input type="checkbox" id="theme-toggle"><span class="slider"></span></label></div></div>
+            </div>
+
+            <!-- INVITE & EARN -->
+            <div id="invite-earn" class="tab-panel">
+                 <div class="panel-header"><h1>Invite & Earn</h1><p>Share your love for learning and get rewarded!</p></div>
+                <div class="form-section invite-box">
+                    <div class="icon"><i class="fa-solid fa-gift"></i></div>
+                    <h3>Invite Friends, Earn Rewards!</h3>
+                    <p>Share your unique referral link with friends. You'll earn credits when they sign up!</p>
+                    <div class="referral-link-wrapper">
+                        <div id="referral-link"></div>
+                        <button id="copy-link-btn" class="btn btn-primary">Copy Link</button>
+                    </div>
+                    <p style="margin-bottom: 20px;">Or share via</p>
+                    <div class="social-share">
+                        <a href="#" id="share-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" id="share-twitter" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" id="share-email"><i class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HELP & SUPPORT -->
+            <div id="help-support" class="tab-panel">
+                <div class="panel-header"><h1>Help & Support</h1><p>Find answers to your questions.</p></div>
+                <div class="form-section">
+                    <h3>Frequently Asked Questions</h3>
+                    <div class="faq-item">
+                        <details><summary>How do I reset my password?</summary><p>You can reset your password from the Security tab in your profile settings. Click on "Change Password" and follow the on-screen instructions.</p></details>
+                        <details><summary>Where can I find my course certificates?</summary><p>Once you complete a course 100%, the certificate will be available for download in the "My Courses" section, right below the course progress bar.</p></details>
+                    </div>
+                </div>
+            </div>
+
         </main>
-
-        <!-- Bottom Navigation Bar -->
-        <nav class="bottom-nav">
-            <div class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-layer-group"></i>
-                <span>Batches</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-pencil-ruler"></i>
-                <span>Practice</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-book"></i>
-                <span>Study Stuff</span>
-            </div>
-            <div class="nav-item active">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </div>
-        </nav>
     </div>
 
+    <div class="toast-container" id="toast-container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
     <script>
-        // JavaScript remains unchanged as it handles functionality, not styling.
-        const logoutButton = document.getElementById('logout-btn');
-        if (logoutButton) {
-            logoutButton.addEventListener('click', function(event) {
-                event.preventDefault(); 
-                const isConfirmed = confirm('Are you sure you want to log out of your account?');
-                if (isConfirmed) {
-                    alert('Logging you out...');
-                    console.log('User logged out.');
-                } else {
-                    console.log('Logout cancelled.');
-                }
-            });
+        // Toast Notification Helper
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast show';
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.addEventListener('transitionend', () => toast.remove());
+            }, 3000);
         }
 
-        const fileUploadInput = document.getElementById('file-upload');
-        const profilePhoto = document.querySelector('.profile-photo');
-
-        if (fileUploadInput && profilePhoto) {
-            fileUploadInput.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    if (file.type === "image/jpeg" || file.type === "image/png") {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            profilePhoto.src = e.target.result;
-                            alert('Image selected! In a real app, this would be uploaded and saved.');
-                        }
-                        reader.readAsDataURL(file);
-                    } else {
-                        alert('Please select a JPG or PNG file only.');
-                    }
-                }
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- INITIALIZE PHONE INPUT ---
+            const phoneInputField = document.querySelector("#phone");
+            const phoneInput = window.intlTelInput(phoneInputField, {
+                initialCountry: "in",
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
             });
-        }
+
+            // --- TAB NAVIGATION ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    tabPanels.forEach(p => p.classList.remove('active'));
+                    link.classList.add('active');
+                    document.querySelector(link.getAttribute('href')).classList.add('active');
+                });
+            });
+
+            // --- THEME SWITCH (DARK/LIGHT MODE) ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const docHtml = document.documentElement;
+            if (localStorage.getItem('theme') === 'light') {
+                docHtml.classList.add('light-theme');
+                themeToggle.checked = true;
+            }
+            themeToggle.addEventListener('change', function() {
+                docHtml.classList.toggle('light-theme', this.checked);
+                localStorage.setItem('theme', this.checked ? 'light' : 'dark');
+            });
+
+            // --- INVITE & EARN LOGIC ---
+            const referralLinkEl = document.getElementById('referral-link');
+            const baseLink = 'https://study-ratna-five.vercel.app/';
+            // Generate a random-looking referral code
+            const userReferralCode = 'ref/' + (Math.random().toString(36).substring(2, 10)).toUpperCase();
+            const fullReferralLink = baseLink + userReferralCode;
+            referralLinkEl.textContent = fullReferralLink;
+
+            document.getElementById('copy-link-btn').addEventListener('click', function() {
+                navigator.clipboard.writeText(fullReferralLink).then(() => showToast('Link Copied!'));
+            });
+
+            const shareText = encodeURIComponent(`Join me on StudyRatna and get exclusive benefits! Use my link: ${fullReferralLink}`);
+            document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}`;
+            document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${shareText}`;
+            document.getElementById('share-email').href = `mailto:?subject=Join me on StudyRatna!&body=${shareText}`;
+        });
     </script>
 </body>
 </html>
